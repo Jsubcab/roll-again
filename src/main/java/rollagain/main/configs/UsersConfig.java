@@ -1,4 +1,4 @@
-package rollagain.main.users;
+package rollagain.main.configs;
 
 import java.util.List;
 
@@ -6,14 +6,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import rollagain.main.entities.Users;
+import rollagain.main.repositories.UserRepository;
+
 
 @Configuration
-public class UserConfig
+public class UsersConfig
 {
     @Bean
     CommandLineRunner commandLineRunner(final UserRepository repository) {
         return args -> {
-                final User Jorge = new User(
+                final Users Jorge = new Users(
                     "Jorge",
                     "123456",
                     "Terrassa",
@@ -22,7 +25,7 @@ public class UserConfig
                     "pepe@phono.com"
             );
 
-            final User Jose = new User(
+            final Users Jose = new Users(
                 "Jose",
                 "pepe",
                 "Terrassa",

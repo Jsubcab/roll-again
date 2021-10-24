@@ -5,7 +5,6 @@
       <set>
         <option value="activate" />
         <option value="fieldCanBeFinal" />
-        <option value="localCanBeFinal" />
         <option value="missingOverrideAnnotation" />
         <option value="useBlocks" />
       </set>

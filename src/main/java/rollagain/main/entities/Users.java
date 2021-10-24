@@ -1,4 +1,4 @@
-package rollagain.main.users;
+package rollagain.main.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,18 +10,18 @@ import javax.persistence.Table;
 
 @Entity
 @Table
-class User
+public class Users
 {
     @Id
     @SequenceGenerator(
-        name = "user_sequence",
-        sequenceName = "user_sequence",
+        name = "users_sequence",
+        sequenceName = "users_sequence",
         allocationSize = 1
     )
 
     @GeneratedValue(
         strategy = GenerationType.SEQUENCE,
-        generator = "user_sequence"
+        generator = "users_sequence"
     )
     private Long id;
     private String username;
@@ -31,17 +31,17 @@ class User
     private Integer phone;
     private String email;
 
-    public User() {
+    public Users() {
 
     }
 
-    public User(final Long id,
-                final String username,
-                final String password,
-                final String city,
-                final String zipcode,
-                final Integer phone,
-                final String email)
+    public Users(final Long id,
+                 final String username,
+                 final String password,
+                 final String city,
+                 final String zipcode,
+                 final Integer phone,
+                 final String email)
     {
         this.id = id;
         this.username = username;
@@ -52,12 +52,12 @@ class User
         this.email = email;
     }
 
-    public User(final String username,
-                final String password,
-                final String city,
-                final String zipcode,
-                final Integer phone,
-                final String email)
+    public Users(final String username,
+                 final String password,
+                 final String city,
+                 final String zipcode,
+                 final Integer phone,
+                 final String email)
     {
         this.username = username;
         this.password = password;

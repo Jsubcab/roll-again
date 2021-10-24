@@ -1,4 +1,4 @@
-package rollagain.main.users;
+package rollagain.main.controllers;
 
 import java.util.List;
 
@@ -9,26 +9,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import rollagain.main.entities.Users;
+import rollagain.main.services.UsersService;
+
 
 @RestController
 @RequestMapping(path = "api/users")
-public class UserController
+public class UsersController
 {
 
-    private final UserService userService;
+    private final UsersService userService;
 
     @Autowired
-    public UserController(final UserService userService) {
+    public UsersController(final UsersService userService) {
         this.userService = userService;
     }
 
     @GetMapping
-    public List<User> getUsers(){
+    public List<Users> getUsers(){
         return userService.getUsers();
     }
 
     @PostMapping
-    public void registerNewUser(@RequestBody User user) {
+    public void registerNewUser(@RequestBody Users user) {
         userService.addNewUser(user);
     }
 }
