@@ -34,8 +34,17 @@ public class UsersConfig
                 "aloha@europa.com"
             );
 
+            final Users Jesus = new Users(
+                "Jesus",
+                "123456",
+                "Terrassa",
+                "08200",
+                937128391,
+                "jesus@me.com"
+            );
+
             repository.saveAll(
-                List.of(Jorge,Jose)
+                List.of(Jorge,Jose, Jesus)
             );
         };
     }
