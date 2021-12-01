@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import rollagain.main.entities.Rates;
 import rollagain.main.entities.Users;
+import rollagain.main.repositories.PermissionsRepository;
 import rollagain.main.repositories.RatesRepository;
 import rollagain.main.repositories.UserRepository;
 
@@ -23,10 +24,16 @@ public class UsersService
     @Autowired
     private final RatesRepository ratesRepository;
 
-    public UsersService(final UserRepository userRepository, final RatesRepository ratesRepository)
+    @Autowired
+    private final PermissionsRepository permissionsRepository;
+
+    public UsersService(final UserRepository userRepository,
+                        final RatesRepository ratesRepository,
+                        final PermissionsRepository permissionsRepository)
     {
         this.userRepository = userRepository;
         this.ratesRepository = ratesRepository;
+        this.permissionsRepository = permissionsRepository;
     }
 
     public List<Users> getUsers(){

@@ -14,7 +14,7 @@ import rollagain.main.repositories.UserRepository;
 public class UsersConfig
 {
     @Bean
-    CommandLineRunner commandLineRunner(final UserRepository repository) {
+    CommandLineRunner commandLineRunnerUsers(final UserRepository repository) {
         return args -> {
                 final Users Jorge = new Users(
                     "Jorge",

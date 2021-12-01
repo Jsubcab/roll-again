@@ -1,9 +1,12 @@
 package rollagain.main.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -30,6 +33,8 @@ public class Users
     private String zipcode;
     private Integer phone;
     private String email;
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private Permissions permission;
 
     public Users() {
 
@@ -137,17 +142,28 @@ public class Users
         this.email = email;
     }
 
+    public Permissions getPermission()
+    {
+        return permission;
+    }
+
+    public void setPermission(final Permissions permission)
+    {
+        this.permission = permission;
+    }
+
     @Override
     public String toString()
     {
-        return "UsersImpl{" +
+        return "Users{" +
             "id=" + id +
             ", username='" + username + '\'' +
             ", password='" + password + '\'' +
             ", city='" + city + '\'' +
-            ", zipcode=" + zipcode +
+            ", zipcode='" + zipcode + '\'' +
             ", phone=" + phone +
             ", email='" + email + '\'' +
+            ", permission=" + permission +
             '}';
     }
 }
