@@ -1,9 +1,14 @@
 package rollagain.main.entities;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -24,25 +29,24 @@ public class Rates
         generator = "rates_sequence"
     )
     private Long id;
-    private Long id_user;
     private Double rating;
     private String comment;
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private Users user;
 
     public Rates(){
 
     }
 
-    public Rates(final Long id_user, final Double rating, final String comment)
+    public Rates(final Double rating, final String comment)
     {
-        this.id_user = id_user;
         this.rating = rating;
         this.comment = comment;
     }
 
-    public Rates(final Long id, final Long id_user, final Double rating, final String comment)
+    public Rates(final Long id,final Double rating, final String comment)
     {
         this.id = id;
-        this.id_user = id_user;
         this.rating = rating;
         this.comment = comment;
     }
@@ -55,16 +59,6 @@ public class Rates
     public void setId(final Long id)
     {
         this.id = id;
-    }
-
-    public Long getId_user()
-    {
-        return id_user;
-    }
-
-    public void setId_user(final Long id_user)
-    {
-        this.id_user = id_user;
     }
 
     public Double getRating()
@@ -85,5 +79,15 @@ public class Rates
     public void setComment(final String comment)
     {
         this.comment = comment;
+    }
+
+    public Users getUser()
+    {
+        return user;
+    }
+
+    public void setUser(final Users user)
+    {
+        this.user = user;
     }
 }
