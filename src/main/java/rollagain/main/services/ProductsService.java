@@ -77,32 +77,32 @@ public class ProductsService
 
     @Transactional
     public void updateProduct(Long productId,
-                           String newName) {
+                           Products newProduct) {
 
         Products product = productsRepository.findById(productId)
             .orElseThrow(() -> new IllegalStateException(
                 "Product with id " + productId + " does not exist."));
 
-        if (newName != null && newName.length() > 0 && !Objects.equals(product.getName(),
-            newName)) {
-            product.setName(newName);
-        }
-/*
-        if (newDescription != null && newDescription.length() > 0 && !Objects.equals(product.getDescription(),
-            newDescription)) {
-            product.setDescription(newDescription);
+        if (newProduct.getName() != null && newProduct.getName() .length() > 0 && !Objects.equals(product.getName(),
+            newProduct.getName() )) {
+            product.setName(newProduct.getName());
         }
 
-        if (newPicture != null && newPicture.length() > 0 && !Objects.equals(product.getPicture(),
-            newPicture)) {
-            product.setPicture(newPicture);
+        if (newProduct.getDescription() != null && newProduct.getDescription().length() > 0 && !Objects.equals(product.getDescription(),
+            newProduct.getDescription())) {
+            product.setDescription(newProduct.getDescription());
         }
 
-        if (newCategory != null && newCategory.length() > 0 && !Objects.equals(product.getCategory().getCategory().toLowerCase(),
-            newCategory)) {
-            product.getCategory().setCategory(newCategory);
+        if (newProduct.getPicture() != null && newProduct.getPicture().length() > 0 && !Objects.equals(product.getPicture(),
+            newProduct.getPicture())) {
+            product.setPicture(newProduct.getPicture());
+        }
+
+/*        if (newProduct.getCategory().getCategory() != null && newProduct.getCategory().getCategory().length() > 0 && !Objects.equals(product.getCategory().getCategory().toLowerCase(),
+            newProduct.getCategory().getCategory().toLowerCase())) {
+            product.setCategory(newProduct.getCategory());
         }*/
-
+        productsRepository.flush();
     }
 
 }

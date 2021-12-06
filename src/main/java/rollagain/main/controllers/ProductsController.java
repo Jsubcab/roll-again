@@ -53,7 +53,7 @@ public class ProductsController
     @PutMapping(path = "{productId}")
     public void updateUsers(
         @PathVariable("productId") Long productId,
-        @RequestParam(required = false) String name) {
-        productsService.updateProduct(productId, name);
+        @RequestBody Products product) {
+        productsService.updateProduct(productId, product);
     }
 }
