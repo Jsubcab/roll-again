@@ -1,0 +1,103 @@
+package rollagain.main.entities;
+
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+
+@Entity
+@Table
+public class Categories
+{
+    @Id
+    @SequenceGenerator(
+        name = "rates_sequence",
+        sequenceName = "rates_sequence",
+        allocationSize = 1
+    )
+
+    @GeneratedValue(
+        strategy = GenerationType.SEQUENCE,
+        generator = "rates_sequence"
+    )
+    @Column(name ="categoryId")
+    private Long id;
+    private String category;
+    @OneToMany(cascade={CascadeType.ALL})
+    @Fetch(FetchMode.JOIN)
+    @JoinColumn(name="categoryId", referencedColumnName="categoryId")
+    private Set<Products> products;
+
+    public Categories() {
+
+    }
+
+    public Categories(final Long id, final String category)
+    {
+        this.id = id;
+        this.category = category;
+    }
+
+    public Categories(final String category)
+    {
+        this.category = category;
+    }
+
+    public Long getId()
+    {
+        return id;
+    }
+
+    public void setId(final Long id)
+    {
+        this.id = id;
+    }
+
+    public String getCategory()
+    {
+        return category;
+    }
+
+    public void setCategory(final String category)
+    {
+        this.category = category;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JsonManagedReference
+    public Set<Products> getProducts()
+    {
+        return products;
+    }
+
+    public void setProducts(final Set<Products> products)
+    {
+        this.products = products;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Categories{" +
+            "id=" + id +
+            ", category='" + category + '\'' +
+            ", products=" + products +
+            '}';
+    }
+}

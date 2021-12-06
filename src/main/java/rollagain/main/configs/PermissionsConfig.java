@@ -7,9 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import rollagain.main.entities.Permissions;
-import rollagain.main.entities.Users;
 import rollagain.main.repositories.PermissionsRepository;
-import rollagain.main.repositories.UserRepository;
 
 
 @Configuration

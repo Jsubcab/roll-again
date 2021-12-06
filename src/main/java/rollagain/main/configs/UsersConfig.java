@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import rollagain.main.entities.Permissions;
 import rollagain.main.entities.Users;
 import rollagain.main.repositories.UserRepository;
 
@@ -13,6 +14,8 @@ import rollagain.main.repositories.UserRepository;
 @Configuration
 public class UsersConfig
 {
+    Permissions permissionsTest = new Permissions();
+
     @Bean
     CommandLineRunner commandLineRunnerUsers(final UserRepository repository) {
         return args -> {

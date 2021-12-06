@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import rollagain.main.entities.Permissions;
 import rollagain.main.entities.Rates;
 import rollagain.main.entities.Users;
-import rollagain.main.repositories.PermissionsRepository;
 import rollagain.main.repositories.RatesRepository;
 import rollagain.main.repositories.UserRepository;
 
@@ -24,16 +24,11 @@ public class UsersService
     @Autowired
     private final RatesRepository ratesRepository;
 
-    @Autowired
-    private final PermissionsRepository permissionsRepository;
-
     public UsersService(final UserRepository userRepository,
-                        final RatesRepository ratesRepository,
-                        final PermissionsRepository permissionsRepository)
+                        final RatesRepository ratesRepository)
     {
         this.userRepository = userRepository;
         this.ratesRepository = ratesRepository;
-        this.permissionsRepository = permissionsRepository;
     }
 
     public List<Users> getUsers(){
@@ -90,7 +85,12 @@ public class UsersService
         }
     }
 
-    public List<Rates> getRates(Long userId)
+    public List<Rates> getRates()
+    {
+        return ratesRepository.findAll();
+    }
+
+    public List<Rates> getRatesById(Long userId)
     {
         return ratesRepository.findRatesById(userId);
     }
@@ -132,4 +132,11 @@ public class UsersService
             rate.setComment(newComment);
         }
     }
+
+    public Permissions getPermissionById(Long userId)
+    {
+        return userRepository.findPermissionById(userId);
+    }
+
+
 }

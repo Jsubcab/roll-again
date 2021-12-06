@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import rollagain.main.entities.Permissions;
 import rollagain.main.entities.Rates;
 import rollagain.main.entities.Users;
+import rollagain.main.services.PermissionsService;
 import rollagain.main.services.UsersService;
 
 
@@ -23,10 +25,12 @@ import rollagain.main.services.UsersService;
 public class UsersController
 {
     private final UsersService userService;
+    private final PermissionsService permissionsService;
 
     @Autowired
-    public UsersController(final UsersService userService) {
+    public UsersController(final UsersService userService, final PermissionsService permissionsService) {
         this.userService = userService;
+        this.permissionsService = permissionsService;
     }
 
     //USERS
@@ -62,9 +66,14 @@ public class UsersController
         }
 
     //RATES
+    @GetMapping(value = "/rates")
+    public List<Rates> getRates() {
+        return userService.getRates();
+    }
+
     @GetMapping(value = "{userId}/rates")
-    public List<Rates> getRates(@PathVariable("userId") Long userId) {
-    return userService.getRates(userId);
+    public List<Rates> getRatesById(@PathVariable("userId") Long userId) {
+    return userService.getRatesById(userId);
     }
 
     @PostMapping(value = "{userId}/rates")
@@ -83,6 +92,12 @@ public class UsersController
         @RequestParam(required = false) Double rating,
         @RequestParam(required = false) String comment) {
         userService.updateRate(rateId, rating, comment);
+    }
+
+    //PERMISSIONS
+    @GetMapping(value = "{userId}/permissions")
+    public Permissions getPermissions(@PathVariable("userId") Long userId) {
+        return userService.getPermissionById(userId);
     }
 
 }

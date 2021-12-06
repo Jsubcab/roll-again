@@ -7,7 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-
 @Entity
 @Table
 public class Permissions
@@ -29,7 +28,7 @@ public class Permissions
     public Permissions() {
 
     }
-    public Permissions(final Long id, final String level)
+    public Permissions(final Long id, String level)
     {
         this.id = id;
         this.level = level;
