@@ -35,8 +35,8 @@ public class Users
     private String zipcode;
     private Integer phone;
     private String email;
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    private Permissions permission;
+/*    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private Permissions permission;*/
 
     public Users() {
 
@@ -144,7 +144,7 @@ public class Users
         this.email = email;
     }
 
-    public Permissions getPermission()
+/*    public Permissions getPermission()
     {
         return permission;
     }
@@ -152,7 +152,7 @@ public class Users
     public void setPermission(final Permissions permission)
     {
         this.permission = permission;
-    }
+    }*/
 
     @Override
     public String toString()
@@ -165,7 +165,7 @@ public class Users
             ", zipcode='" + zipcode + '\'' +
             ", phone=" + phone +
             ", email='" + email + '\'' +
-            ", permission=" + permission +
+           // ", permission=" + permission +
             '}';
     }
 }

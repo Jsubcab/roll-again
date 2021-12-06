@@ -1,4 +1,4 @@
-package rollagain.main.enums;
+package rollagain.main.services.enums;
 
 public enum EnumPermissions
 {

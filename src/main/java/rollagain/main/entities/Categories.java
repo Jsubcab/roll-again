@@ -75,7 +75,7 @@ public class Categories
 
     public void setCategory(final String category)
     {
-        this.category = category;
+        this.category = category.toLowerCase();
     }
 
     public Set<Products> getProducts()

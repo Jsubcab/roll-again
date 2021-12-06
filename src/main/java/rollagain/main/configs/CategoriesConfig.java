@@ -18,15 +18,15 @@ public class CategoriesConfig
         return args -> {
 
             final Categories Ameritrash = new Categories(
-                "Ameritrash"
+                "Ameritrash".toLowerCase()
             );
 
             final Categories Eurogame = new Categories(
-                "Eurogame"
+                "Eurogame".toLowerCase()
             );
 
             final Categories Filler = new Categories(
-                "Filler"
+                "Filler".toLowerCase()
             );
 
             repository.saveAll(

@@ -9,4 +9,5 @@ import rollagain.main.entities.Categories;
 @Repository
 public interface CategoriesRepository extends JpaRepository<Categories, Long>
 {
+    Categories findByCategory(String category);
 }
