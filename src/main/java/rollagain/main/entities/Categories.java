@@ -1,5 +1,6 @@
 package rollagain.main.entities;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -27,22 +28,20 @@ public class Categories
 {
     @Id
     @SequenceGenerator(
-        name = "rates_sequence",
-        sequenceName = "rates_sequence",
+        name = "categories_identity",
+        sequenceName = "categories_identity",
         allocationSize = 1
     )
 
     @GeneratedValue(
-        strategy = GenerationType.SEQUENCE,
-        generator = "rates_sequence"
+        strategy = GenerationType.IDENTITY,
+        generator = "categories_identity"
     )
-    @Column(name ="categoryId")
+    @Column(columnDefinition = "serial")
     private Long id;
     private String category;
-    @OneToMany(cascade={CascadeType.ALL})
-    @Fetch(FetchMode.JOIN)
-    @JoinColumn(name="categoryId", referencedColumnName="categoryId")
-    private Set<Products> products;
+    @OneToMany(mappedBy = "category", cascade=CascadeType.ALL)
+    private Set<Products> products = new HashSet<>();
 
     public Categories() {
 
@@ -79,16 +78,22 @@ public class Categories
         this.category = category;
     }
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @JsonManagedReference
     public Set<Products> getProducts()
     {
         return products;
     }
 
-    public void setProducts(final Set<Products> products)
+    //public void setProducts(final Set<Products> products)
     {
         this.products = products;
+    }
+
+    public void setProducts(Set<Products> products) {
+        this.products = products;
+
+        for(Products p : products) {
+            p.setCategory(this);
+        }
     }
 
     @Override

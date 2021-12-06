@@ -1,5 +1,6 @@
 package rollagain.main.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,15 +14,16 @@ public class Permissions
 {
     @Id
     @SequenceGenerator(
-        name = "rates_sequence",
-        sequenceName = "rates_sequence",
+        name = "permissions_identity",
+        sequenceName = "permissions_identity",
         allocationSize = 1
     )
 
     @GeneratedValue(
-        strategy = GenerationType.SEQUENCE,
-        generator = "rates_sequence"
+        strategy = GenerationType.IDENTITY,
+        generator = "permissions_identity"
     )
+    @Column(columnDefinition = "serial")
     private Long id;
     private String level;
 

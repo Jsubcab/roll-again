@@ -1,6 +1,7 @@
 package rollagain.main.entities;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @Entity
@@ -20,15 +22,16 @@ public class Products
 {
     @Id
     @SequenceGenerator(
-        name = "users_sequence",
-        sequenceName = "users_sequence",
+        name = "products_identity",
+        sequenceName = "products_identity",
         allocationSize = 1
     )
 
     @GeneratedValue(
-        strategy = GenerationType.SEQUENCE,
-        generator = "users_sequence"
+        strategy = GenerationType.IDENTITY,
+        generator = "products_identity"
     )
+    @Column(columnDefinition = "serial")
     private Long id;
     private String name;
     private String description;
@@ -37,8 +40,9 @@ public class Products
 /*    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Users users;*/
     //@ManyToOne(targetEntity = Categories.class, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    @ManyToOne
-    @JoinColumn(name="categoryId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name="category_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Categories category;
 
     public Products() {
@@ -129,9 +133,6 @@ public class Products
         this.users = users;
     }*/
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "categoryId", nullable = false)
-    @JsonBackReference
     public Categories getCategory()
     {
         return category;

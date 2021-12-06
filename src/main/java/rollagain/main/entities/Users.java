@@ -1,6 +1,7 @@
 package rollagain.main.entities;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,15 +18,16 @@ public class Users
 {
     @Id
     @SequenceGenerator(
-        name = "users_sequence",
-        sequenceName = "users_sequence",
+        name = "users_identity",
+        sequenceName = "users_identity",
         allocationSize = 1
     )
 
     @GeneratedValue(
-        strategy = GenerationType.SEQUENCE,
-        generator = "users_sequence"
+        strategy = GenerationType.IDENTITY,
+        generator = "users_identity"
     )
+    @Column(columnDefinition = "serial")
     private Long id;
     private String username;
     private String password;
