@@ -1,5 +1,10 @@
 package rollagain.main.entities;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,9 +12,17 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import rollagain.main.services.enums.EnumPermissions;
 
 
 @Entity
@@ -35,8 +48,14 @@ public class Users
     private String zipcode;
     private Integer phone;
     private String email;
-/*    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    private Permissions permission;*/
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
+    @JoinColumn(name="permission_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Permissions permission;
+
+    @OneToMany(mappedBy = "users", cascade=CascadeType.ALL)
+    private Set<Products> products = new HashSet<>();
 
     public Users() {
 
@@ -144,7 +163,7 @@ public class Users
         this.email = email;
     }
 
-/*    public Permissions getPermission()
+    public Permissions getPermission()
     {
         return permission;
     }
@@ -152,7 +171,20 @@ public class Users
     public void setPermission(final Permissions permission)
     {
         this.permission = permission;
-    }*/
+    }
+
+    public Set<Products> getProducts()
+    {
+        return products;
+    }
+
+    public void setProducts(Set<Products> products) {
+        this.products = products;
+
+        for(Products p : products) {
+            p.setUsers(this);
+        }
+    }
 
     @Override
     public String toString()
@@ -165,7 +197,8 @@ public class Users
             ", zipcode='" + zipcode + '\'' +
             ", phone=" + phone +
             ", email='" + email + '\'' +
-           // ", permission=" + permission +
+            ", permission=" + permission +
+            ", products=" + products +
             '}';
     }
 }

@@ -46,7 +46,6 @@ public class UsersController
         return userService.getUserById(userId);
     }
 
-
     @PostMapping
     public void registerNewUser(@RequestBody Users user) {
         userService.addNewUser(user);
@@ -59,10 +58,8 @@ public class UsersController
 
     @PutMapping(path = "{userId}")
     public void updateUsers(
-    @PathVariable("userId") Long userId,
-    @RequestParam(required = false) String username,
-    @RequestParam(required = false) String email) {
-            userService.updateUser(userId, username, email);
+    @PathVariable("userId") Long userId, @RequestBody Users user) {
+            userService.updateUser(userId, user);
         }
 
     //RATES

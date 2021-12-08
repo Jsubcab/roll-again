@@ -15,7 +15,7 @@ import rollagain.main.entities.Users;
 public interface UserRepository extends JpaRepository<Users, Long>
 {
     //@Query("SELECT u FROM Users u WHERE u.email = ?1")
-    Optional<Users> findUsersByEmail(String email);
+    Users findUsersByEmail(String email);
 
     @Query(value = "SELECT * FROM Users u WHERE u.permission_id = ?1", nativeQuery = true)
     Permissions findPermissionById(Long permission_id);

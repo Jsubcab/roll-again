@@ -1,13 +1,11 @@
 package rollagain.main.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import rollagain.main.entities.Permissions;
-import rollagain.main.entities.Rates;
 import rollagain.main.repositories.PermissionsRepository;
 
 
@@ -29,12 +27,6 @@ public class PermissionsService
 
     public void addNewPermission(final Permissions permission)
     {
-        Optional<Permissions> permissionsOptional = permissionsRepository
-            .findPermissionsByLevel(permission.getLevel());
-
-        if (permissionsOptional.isPresent()) {
-            throw new IllegalStateException("ERROR: Email already registered.");
-        }
         permissionsRepository.save(permission);
     }
 

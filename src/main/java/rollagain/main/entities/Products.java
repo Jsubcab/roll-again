@@ -1,5 +1,8 @@
 package rollagain.main.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -37,13 +41,15 @@ public class Products
     private String description;
     private String picture;
     private String state;
-/*    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    private Users users;*/
-    //@ManyToOne(targetEntity = Categories.class, cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="category_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Categories category;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="users_id")
+    private Users users;
 
     public Products() {
 
@@ -123,7 +129,7 @@ public class Products
         this.state = state;
     }
 
-/*    public Users getUsers()
+    public Users getUsers()
     {
         return users;
     }
@@ -131,7 +137,7 @@ public class Products
     public void setUsers(final Users users)
     {
         this.users = users;
-    }*/
+    }
 
     public Categories getCategory()
     {
@@ -143,4 +149,17 @@ public class Products
         this.category = category;
     }
 
+    @Override
+    public String toString()
+    {
+        return "Products{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", description='" + description + '\'' +
+            ", picture='" + picture + '\'' +
+            ", state='" + state + '\'' +
+            ", category=" + category +
+            ", users=" + users +
+            '}';
+    }
 }

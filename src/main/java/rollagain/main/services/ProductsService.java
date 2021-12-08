@@ -14,6 +14,7 @@ import rollagain.main.entities.Products;
 import rollagain.main.entities.Users;
 import rollagain.main.repositories.CategoriesRepository;
 import rollagain.main.repositories.ProductsRepository;
+import rollagain.main.repositories.UserRepository;
 import rollagain.main.services.enums.EnumStateProducts;
 
 
@@ -26,10 +27,16 @@ public class ProductsService
     @Autowired
     private final CategoriesRepository categoriesRepository;
 
-    public ProductsService(final ProductsRepository productsRepository, final CategoriesRepository categoriesRepository)
+    @Autowired
+    private final UserRepository userRepository;
+
+    public ProductsService(final ProductsRepository productsRepository,
+                           final CategoriesRepository categoriesRepository,
+                           final UserRepository userRepository)
     {
         this.productsRepository = productsRepository;
         this.categoriesRepository = categoriesRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Products> getProducts(){
@@ -51,19 +58,21 @@ public class ProductsService
         }
 
         Categories category = categoriesRepository.findByCategory(product.getCategory().getCategory().toLowerCase());
+        Users user = userRepository.findUsersByEmail(product.getUsers().getEmail());
 
-        if (category != null) {
-            productsRepository.save(createNewProduct(product, category));
+        if (category != null && user != null) {
+            productsRepository.save(createNewProduct(product, category, user));
         }
 
     }
-    private Products createNewProduct(Products product, Categories category) {
+    private Products createNewProduct(Products product, Categories category, Users user) {
         Products newProduct = new Products();
         newProduct.setCategory(category);
         newProduct.setName(product.getName());
         newProduct.setDescription(product.getDescription());
         newProduct.setState(EnumStateProducts.ON_SALE.name());
         newProduct.setPicture(product.getPicture());
+        newProduct.setUsers(user);
         return newProduct;
     }
 

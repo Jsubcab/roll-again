@@ -74,8 +74,6 @@ public class Categories
     {
         return products;
     }
-
-    //public void setProducts(final Set<Products> products)
     {
         this.products = products;
     }

@@ -12,5 +12,6 @@ import rollagain.main.entities.Users;
 @Repository
 public interface PermissionsRepository extends JpaRepository<Permissions, Long>
 {
-    Optional<Permissions> findPermissionsByLevel(String level);
+    Permissions findPermissionsByLevel(String level);
+    Permissions findByLevel(String level);
 }
