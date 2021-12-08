@@ -1,5 +1,6 @@
 package rollagain.main.entities;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table
-public class Permissions
+public class Permissions implements Serializable
 {
     @Id
     @SequenceGenerator(

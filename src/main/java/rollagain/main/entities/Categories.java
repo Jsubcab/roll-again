@@ -1,5 +1,6 @@
 package rollagain.main.entities;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table
-public class Categories
+public class Categories implements Serializable
 {
     @Id
     @SequenceGenerator(

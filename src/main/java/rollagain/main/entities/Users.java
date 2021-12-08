@@ -1,5 +1,6 @@
 package rollagain.main.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -13,8 +14,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -25,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 @Table
-public class Users
+public class Users implements Serializable
 {
     @Id
     @SequenceGenerator(
@@ -52,10 +51,10 @@ public class Users
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Permissions permission;
 
-    @OneToMany(mappedBy = "users", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade=CascadeType.ALL)
     private Set<Products> products = new HashSet<>();
 
-    @OneToMany(mappedBy = "usersOrder", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade=CascadeType.ALL)
     private Set<Orders> orders = new HashSet<>();
 
     public Users() {

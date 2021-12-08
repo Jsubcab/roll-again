@@ -2,23 +2,20 @@ package rollagain.main.services;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
-import rollagain.main.entities.Categories;
+import rollagain.main.entities.Orders;
 import rollagain.main.entities.Permissions;
-import rollagain.main.entities.Products;
 import rollagain.main.entities.Rates;
 import rollagain.main.entities.Users;
+import rollagain.main.repositories.OrdersRepository;
 import rollagain.main.repositories.PermissionsRepository;
 import rollagain.main.repositories.RatesRepository;
 import rollagain.main.repositories.UserRepository;
 import rollagain.main.services.enums.EnumPermissions;
-import rollagain.main.services.enums.EnumStateProducts;
 
 
 @Service
@@ -33,12 +30,18 @@ public class UsersService
     @Autowired
     private final PermissionsRepository permissionsRepository;
 
+    @Autowired
+    private final OrdersRepository ordersRepository;
+
     public UsersService(final UserRepository userRepository,
-                        final RatesRepository ratesRepository, final PermissionsRepository permissionsRepository)
+                        final RatesRepository ratesRepository,
+                        final PermissionsRepository permissionsRepository,
+                        final OrdersRepository ordersRepository)
     {
         this.userRepository = userRepository;
         this.ratesRepository = ratesRepository;
         this.permissionsRepository = permissionsRepository;
+        this.ordersRepository = ordersRepository;
     }
 
     public List<Users> getUsers(){
@@ -199,5 +202,28 @@ public class UsersService
         return userRepository.findPermissionById(userId);
     }
 
+    public List<Orders> getOrders()
+    {
+        return ordersRepository.findAll();
+    }
 
+    public List<Orders> getOrdersById(final Long userId)
+    {
+        return ordersRepository.findOrdersById(userId);
+    }
+
+    public void addNewOrder(final Orders order, final Long userId)
+    {
+        order.setUserOrder(getUserById(userId));
+        ordersRepository.save(order);
+    }
+
+    public void deleteOrder(final Long orderId)
+    {
+        boolean exists = ordersRepository.existsById(orderId);
+        if (!exists) {
+            throw new IllegalStateException("Order with id " + orderId + " does not exists.");
+        }
+        ratesRepository.deleteById(orderId);
+    }
 }

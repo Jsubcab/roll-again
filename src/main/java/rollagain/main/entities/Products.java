@@ -1,7 +1,6 @@
 package rollagain.main.entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,19 +10,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @Entity
 @Table
-public class Products
+public class Products implements Serializable
 {
     @Id
     @SequenceGenerator(
@@ -52,8 +49,8 @@ public class Products
     @JoinColumn(name="users_id")
     private Users user;
 
-    @OneToOne(mappedBy = "products", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Orders order;
+/*    @OneToOne(mappedBy = "product")
+    private Orders order;*/
 
     public Products() {
 
@@ -153,6 +150,18 @@ public class Products
         this.category = category;
     }
 
+/*
+    public Orders getOrder()
+    {
+        return order;
+    }
+
+    public void setOrder(final Orders order)
+    {
+        this.order = order;
+    }
+*/
+
     @Override
     public String toString()
     {
@@ -163,7 +172,8 @@ public class Products
             ", picture='" + picture + '\'' +
             ", state='" + state + '\'' +
             ", category=" + category +
-            ", users=" + user +
+            ", user=" + user +
+            //", order=" + order +
             '}';
     }
 }

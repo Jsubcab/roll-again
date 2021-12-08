@@ -1,5 +1,6 @@
 package rollagain.main.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -18,27 +19,29 @@ import javax.persistence.Table;
 
 @Entity
 @Table
-public class Orders
+public class Orders implements Serializable
 {
     @Id
     @SequenceGenerator(
-        name = "users_identity",
-        sequenceName = "users_identity",
+        name = "orders_identity",
+        sequenceName = "orders_identity",
         allocationSize = 1
     )
 
     @GeneratedValue(
         strategy = GenerationType.IDENTITY,
-        generator = "users_identity"
+        generator = "orders_identity"
     )
+
     @Column(columnDefinition = "serial")
     private Long id;
-    private Date date;
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    private Users userOrder;
+    //private Date date;
+    @JoinColumn(name = "user_id")
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Users user;
 
-    @JoinColumn(name = "products_id")
-    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL)
     private Products product;
 
     public Orders() {
@@ -47,27 +50,27 @@ public class Orders
     public Orders(final Long id, final Date date, final Users user)
     {
         this.id = id;
-        this.date = date;
-        this.userOrder = user;
+        //this.date = date;
+        this.user = user;
     }
 
     public Orders(final Date date, final Users userOrder, final Products product)
     {
-        this.date = date;
-        this.userOrder = userOrder;
+        //this.date = date;
+        this.user = userOrder;
         this.product = product;
     }
 
     public Orders(final Date date, final Users user)
     {
-        this.date = date;
-        this.userOrder = user;
+        //this.date = date;
+        this.user = user;
     }
 
-    public Orders(final Date date)
+/*    public Orders(final Date date)
     {
         this.date = date;
-    }
+    }*/
 
     public Long getId()
     {
@@ -78,7 +81,7 @@ public class Orders
     {
         this.id = id;
     }
-
+/*
     public Date getDate()
     {
         return date;
@@ -87,26 +90,26 @@ public class Orders
     public void setDate(final Date date)
     {
         this.date = date;
-    }
+    }*/
 
     public Users getUser()
     {
-        return userOrder;
+        return user;
     }
 
     public void setUser(final Users user)
     {
-        this.userOrder = user;
+        this.user = user;
     }
 
     public Users getUserOrder()
     {
-        return userOrder;
+        return user;
     }
 
     public void setUserOrder(final Users userOrder)
     {
-        this.userOrder = userOrder;
+        this.user = userOrder;
     }
 
     public Products getProduct()
@@ -124,8 +127,8 @@ public class Orders
     {
         return "Orders{" +
             "id=" + id +
-            ", date=" + date +
-            ", userOrder=" + userOrder +
+            //", date=" + date +
+            ", userOrder=" + user +
             ", product=" + product +
             '}';
     }

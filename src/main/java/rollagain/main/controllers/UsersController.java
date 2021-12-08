@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import rollagain.main.entities.Orders;
 import rollagain.main.entities.Permissions;
 import rollagain.main.entities.Rates;
 import rollagain.main.entities.Users;
@@ -98,5 +99,25 @@ public class UsersController
     }
 
     //ORDERS
+    @GetMapping(value = "/orders")
+    public List<Orders> getOrders() {
+        return userService.getOrders();
+    }
+
+    @GetMapping(value = "{userId}/orders")
+    public List<Orders> getOrdersById(@PathVariable("userId") Long userId) {
+        return userService.getOrdersById(userId);
+    }
+
+    @PostMapping(value = "{userId}/orders")
+    public void registerNewOrders(@PathVariable("userId") Long userId, @RequestBody Orders order) {
+        userService.addNewOrder(order, userId);
+    }
+
+    @DeleteMapping(path = "{userId}/orders/{orderId}")
+    public void deleteOrdersById(@PathVariable("orderId") Long orderId) {
+        userService.deleteOrder(orderId);
+    }
+
 
 }
