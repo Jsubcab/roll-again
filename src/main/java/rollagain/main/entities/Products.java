@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -49,7 +50,10 @@ public class Products
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="users_id")
-    private Users users;
+    private Users user;
+
+    @OneToOne(mappedBy = "products", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private Orders order;
 
     public Products() {
 
@@ -131,12 +135,12 @@ public class Products
 
     public Users getUsers()
     {
-        return users;
+        return user;
     }
 
     public void setUsers(final Users users)
     {
-        this.users = users;
+        this.user = users;
     }
 
     public Categories getCategory()
@@ -159,7 +163,7 @@ public class Products
             ", picture='" + picture + '\'' +
             ", state='" + state + '\'' +
             ", category=" + category +
-            ", users=" + users +
+            ", users=" + user +
             '}';
     }
 }

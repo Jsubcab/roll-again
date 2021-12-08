@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import rollagain.main.controllers.post.NewProductRequest;
 import rollagain.main.entities.Categories;
+import rollagain.main.entities.Permissions;
 import rollagain.main.entities.Products;
 import rollagain.main.entities.Users;
 import rollagain.main.repositories.CategoriesRepository;
@@ -51,27 +53,28 @@ public class ProductsService
     }
 
 
-    public void addNewProduct(final Products product)
+    public void addNewProduct(final NewProductRequest newProductRequest)
     {
-        if (StringUtils.isEmpty(product.getCategory())) {
-            throw new IllegalStateException("Category cannot be null");
+        Optional<Users> user = userRepository.findById(newProductRequest.getUserId());
+        if (!user.isPresent()) {
+            throw new IllegalStateException("Invalid user");
         }
 
-        Categories category = categoriesRepository.findByCategory(product.getCategory().getCategory().toLowerCase());
-        Users user = userRepository.findUsersByEmail(product.getUsers().getEmail());
-
-        if (category != null && user != null) {
-            productsRepository.save(createNewProduct(product, category, user));
+        Categories category = categoriesRepository.findByCategory(newProductRequest.getCategory());
+        if(category == null) {
+            throw new IllegalStateException("Invalid category");
         }
 
+        productsRepository.save(createNewProduct(newProductRequest, category, user.get()));
     }
-    private Products createNewProduct(Products product, Categories category, Users user) {
+
+    private Products createNewProduct(NewProductRequest product, Categories category, Users user) {
         Products newProduct = new Products();
-        newProduct.setCategory(category);
         newProduct.setName(product.getName());
         newProduct.setDescription(product.getDescription());
         newProduct.setState(EnumStateProducts.ON_SALE.name());
         newProduct.setPicture(product.getPicture());
+        newProduct.setCategory(category);
         newProduct.setUsers(user);
         return newProduct;
     }
@@ -107,10 +110,16 @@ public class ProductsService
             product.setPicture(newProduct.getPicture());
         }
 
-/*        if (newProduct.getCategory().getCategory() != null && newProduct.getCategory().getCategory().length() > 0 && !Objects.equals(product.getCategory().getCategory().toLowerCase(),
-            newProduct.getCategory().getCategory().toLowerCase())) {
-            product.setCategory(newProduct.getCategory());
-        }*/
+        if (product.getCategory() != null &&
+            product.getCategory() != null
+            && product.getCategory().getCategory() != null
+            && newProduct.getCategory() != null
+            && !product.getCategory().getCategory().equals(newProduct.getCategory().getCategory())) {
+
+            Categories newCategory = categoriesRepository.findByCategory(newProduct.getCategory().getCategory());
+            product.setCategory(newCategory);
+        }
+        productsRepository.save(product);
         productsRepository.flush();
     }
 

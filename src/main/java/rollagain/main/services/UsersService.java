@@ -54,10 +54,7 @@ public class UsersService
 
     public void addNewUser(final Users user)
     {
-        Users usersOptional = userRepository
-            .findUsersByEmail(user.getEmail());
-
-        if (usersOptional.getEmail().equals(user.getEmail()))
+        if (userRepository.existsUsersByEmail(user.getEmail()))
         {
             throw new IllegalStateException("ERROR: Email already registered.");
         }
@@ -65,11 +62,6 @@ public class UsersService
             Permissions permissionUser = permissionsRepository.findByLevel(EnumPermissions.USER.toString().toLowerCase());
             userRepository.save(createNewUser(user, permissionUser));
 
-/*        Permissions permissions = permissionsRepository.findByLevel(user.getPermission().getLevel().toLowerCase());
-
-       if (permissions != null) {
-           userRepository.save(createNewUser(user, permissions));
-        }*/
     }
 
     private Users createNewUser(Users users, Permissions permissions) {
@@ -141,11 +133,16 @@ public class UsersService
             user.setZipcode(newUserData.getZipcode());
         }
 
-/*        if (newUserData.getPermission() != null && !Objects.equals(user.getPermission(),
-            newUserData.getPermission())) {
-            user.setPermission(newUserData.getPermission());
+        if (user.getPermission() != null
+            && user.getPermission().getLevel() != null
+            && newUserData.getPermission() != null
+            && !user.getPermission().getLevel().equals(newUserData.getPermission().getLevel())) {
 
-        } ADDS A NEW LINE IN PERMISSION*/
+            Permissions newPermission = permissionsRepository.findByLevel(newUserData.getPermission().getLevel());
+            user.setPermission(newPermission);
+        }
+
+        userRepository.save(user);
         userRepository.flush();
     }
 

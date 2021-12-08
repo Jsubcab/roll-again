@@ -10,11 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import rollagain.main.controllers.post.NewProductRequest;
 import rollagain.main.entities.Products;
-import rollagain.main.entities.Users;
 import rollagain.main.services.ProductsService;
 
 
@@ -41,7 +40,7 @@ public class ProductsController
     }
 
     @PostMapping
-    public void registerNewProduct(@RequestBody Products product) {
+    public void registerNewProduct(@RequestBody NewProductRequest product) {
         productsService.addNewProduct(product);
     }
 

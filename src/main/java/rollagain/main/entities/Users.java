@@ -22,8 +22,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import rollagain.main.services.enums.EnumPermissions;
-
 
 @Entity
 @Table
@@ -56,6 +54,9 @@ public class Users
 
     @OneToMany(mappedBy = "users", cascade=CascadeType.ALL)
     private Set<Products> products = new HashSet<>();
+
+    @OneToMany(mappedBy = "usersOrder", cascade=CascadeType.ALL)
+    private Set<Orders> orders = new HashSet<>();
 
     public Users() {
 
@@ -183,6 +184,19 @@ public class Users
 
         for(Products p : products) {
             p.setUsers(this);
+        }
+    }
+
+    public Set<Orders> getOrders()
+    {
+        return orders;
+    }
+
+    public void setOrders(Set<Orders> orders) {
+        this.orders = orders;
+
+        for(Orders o : orders) {
+            o.setUser(this);
         }
     }
 
