@@ -102,16 +102,6 @@ public class Orders implements Serializable
         this.user = user;
     }
 
-    public Users getUserOrder()
-    {
-        return user;
-    }
-
-    public void setUserOrder(final Users userOrder)
-    {
-        this.user = userOrder;
-    }
-
     public Products getProduct()
     {
         return product;

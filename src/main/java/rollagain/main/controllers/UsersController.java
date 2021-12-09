@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import rollagain.main.controllers.post.NewOrderRequest;
 import rollagain.main.entities.Orders;
 import rollagain.main.entities.Permissions;
 import rollagain.main.entities.Rates;
@@ -26,12 +27,10 @@ import rollagain.main.services.UsersService;
 public class UsersController
 {
     private final UsersService userService;
-    private final PermissionsService permissionsService;
 
     @Autowired
-    public UsersController(final UsersService userService, final PermissionsService permissionsService) {
+    public UsersController(final UsersService userService) {
         this.userService = userService;
-        this.permissionsService = permissionsService;
     }
 
     //USERS
@@ -110,7 +109,7 @@ public class UsersController
     }
 
     @PostMapping(value = "{userId}/orders")
-    public void registerNewOrders(@PathVariable("userId") Long userId, @RequestBody Orders order) {
+    public void registerNewOrders(@PathVariable("userId") Long userId, @RequestBody NewOrderRequest order) {
         userService.addNewOrder(order, userId);
     }
 
