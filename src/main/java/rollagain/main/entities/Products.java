@@ -11,7 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -48,9 +47,6 @@ public class Products implements Serializable
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="users_id")
     private Users user;
-
-/*    @OneToOne(mappedBy = "product")
-    private Orders order;*/
 
     public Products() {
 
@@ -150,17 +146,6 @@ public class Products implements Serializable
         this.category = category;
     }
 
-/*
-    public Orders getOrder()
-    {
-        return order;
-    }
-
-    public void setOrder(final Orders order)
-    {
-        this.order = order;
-    }
-*/
 
     @Override
     public String toString()
@@ -173,7 +158,6 @@ public class Products implements Serializable
             ", state='" + state + '\'' +
             ", category=" + category +
             ", user=" + user +
-            //", order=" + order +
             '}';
     }
 }
