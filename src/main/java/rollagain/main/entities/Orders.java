@@ -35,7 +35,7 @@ public class Orders implements Serializable
 
     @Column(columnDefinition = "serial")
     private Long id;
-    //private Date date;
+    private Date date;
     @JoinColumn(name = "user_id")
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Users user;
@@ -50,27 +50,27 @@ public class Orders implements Serializable
     public Orders(final Long id, final Date date, final Users user)
     {
         this.id = id;
-        //this.date = date;
+        this.date = date;
         this.user = user;
     }
 
     public Orders(final Date date, final Users userOrder, final Products product)
     {
-        //this.date = date;
+        this.date = date;
         this.user = userOrder;
         this.product = product;
     }
 
     public Orders(final Date date, final Users user)
     {
-        //this.date = date;
+        this.date = date;
         this.user = user;
     }
 
-/*    public Orders(final Date date)
+    public Orders(final Date date)
     {
         this.date = date;
-    }*/
+    }
 
     public Long getId()
     {
@@ -81,7 +81,7 @@ public class Orders implements Serializable
     {
         this.id = id;
     }
-/*
+
     public Date getDate()
     {
         return date;
@@ -90,7 +90,7 @@ public class Orders implements Serializable
     public void setDate(final Date date)
     {
         this.date = date;
-    }*/
+    }
 
     public Users getUser()
     {
@@ -117,7 +117,7 @@ public class Orders implements Serializable
     {
         return "Orders{" +
             "id=" + id +
-            //", date=" + date +
+            ", date=" + date +
             ", userOrder=" + user +
             ", product=" + product +
             '}';

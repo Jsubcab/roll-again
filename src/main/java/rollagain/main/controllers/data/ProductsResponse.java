@@ -8,6 +8,7 @@ public class ProductsResponse
     private String description;
     private String picture;
     private String state;
+    private Double price;
     private UsersResponse user;
 
     public Long getId()
@@ -48,6 +49,16 @@ public class ProductsResponse
     public void setPicture(final String picture)
     {
         this.picture = picture;
+    }
+
+    public Double getPrice()
+    {
+        return price;
+    }
+
+    public void setPrice(final Double price)
+    {
+        this.price = price;
     }
 
     public String getState()

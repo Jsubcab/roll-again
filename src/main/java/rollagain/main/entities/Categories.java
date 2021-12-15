@@ -75,9 +75,6 @@ public class Categories implements Serializable
     {
         return products;
     }
-    {
-        this.products = products;
-    }
 
     public void setProducts(Set<Products> products) {
         this.products = products;

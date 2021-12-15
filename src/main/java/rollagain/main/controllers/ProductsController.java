@@ -59,6 +59,7 @@ public class ProductsController
         newProduct.setName(p.getName());
         newProduct.setPicture(p.getPicture());
         newProduct.setState(p.getState());
+        newProduct.setPrice(p.getPrice());
 
         newProduct.setUser(new UsersResponse());
 

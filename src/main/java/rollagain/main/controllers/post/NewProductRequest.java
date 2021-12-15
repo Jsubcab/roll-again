@@ -8,6 +8,8 @@ public class NewProductRequest
     private String picture;
     private String state;
     private String category;
+    private Double price;
+
 
     public Long getUserId()
     {
@@ -67,5 +69,15 @@ public class NewProductRequest
     public void setCategory(final String category)
     {
         this.category = category;
+    }
+
+    public Double getPrice()
+    {
+        return price;
+    }
+
+    public void setPrice(final Double price)
+    {
+        this.price = price;
     }
 }

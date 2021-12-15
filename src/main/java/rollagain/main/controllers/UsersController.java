@@ -1,8 +1,11 @@
 package rollagain.main.controllers;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,9 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import rollagain.main.controllers.data.OrdersResponse;
+import rollagain.main.controllers.data.ProductsResponse;
+import rollagain.main.controllers.data.UsersResponse;
 import rollagain.main.controllers.post.NewOrderRequest;
 import rollagain.main.entities.Orders;
 import rollagain.main.entities.Permissions;
+import rollagain.main.entities.Products;
 import rollagain.main.entities.Rates;
 import rollagain.main.entities.Users;
 import rollagain.main.services.PermissionsService;
@@ -35,8 +42,37 @@ public class UsersController
 
     //USERS
     @GetMapping
-    public List<Users> getUsers(){
-        return userService.getUsers();
+    public List<UsersResponse> getUsers(){
+        //return userService.getUsers();
+        final List<Users> productsList = userService.getUsers();
+        if (CollectionUtils.isEmpty(productsList)) {
+            return Collections.emptyList();
+        }
+
+        List<UsersResponse> response = new ArrayList<>();
+        for (Users u : productsList) {
+            UsersResponse newUser = createUsersResponse(u);
+            response.add(newUser);
+        }
+        return response;
+    }
+
+    private UsersResponse createUsersResponse(final Users u)
+    {
+        UsersResponse newUser = new UsersResponse();
+        newUser.setId(u.getId());
+        newUser.setUsername(u.getUsername());
+        newUser.setEmail(u.getEmail());
+        newUser.setCity(u.getCity());
+        newUser.setPhone(u.getPhone());
+        newUser.setZipcode(u.getZipcode());
+
+        newUser.setProducts(new ProductsResponse());
+
+        // TO DO PRODUCTS
+        // newUser.getProducts().setId(u.getProducts().get);
+
+        return newUser;
     }
 
     //USERS
@@ -99,8 +135,44 @@ public class UsersController
 
     //ORDERS
     @GetMapping(value = "/orders")
-    public List<Orders> getOrders() {
-        return userService.getOrders();
+    public List<OrdersResponse> getOrders() {
+
+        final List<Orders> ordersList = userService.getOrders();
+        if (CollectionUtils.isEmpty(ordersList)) {
+            return Collections.emptyList();
+        }
+
+        List<OrdersResponse> response = new ArrayList<>();
+        for (Orders o : ordersList) {
+            OrdersResponse newOrder = createOrdersResponse(o);
+            response.add(newOrder);
+        }
+        return response;
+    }
+
+    private OrdersResponse createOrdersResponse(final Orders o)
+    {
+        OrdersResponse newOrder = new OrdersResponse();
+        newOrder.setId(o.getId());
+        newOrder.setDate(o.getDate());
+
+        newOrder.setUser(new UsersResponse());
+        newOrder.setProducts(new ProductsResponse());
+
+        newOrder.getUser().setId(o.getUser().getId());
+        newOrder.getUser().setUsername(o.getUser().getUsername());
+        newOrder.getUser().setEmail(o.getUser().getEmail());
+        newOrder.getUser().setCity(o.getUser().getCity());
+        newOrder.getUser().setPhone(o.getUser().getPhone());
+        newOrder.getUser().setZipcode(o.getUser().getZipcode());
+
+        newOrder.getProducts().setId(o.getProduct().getId());
+        newOrder.getProducts().setDescription(o.getProduct().getDescription());
+        newOrder.getProducts().setName(o.getProduct().getName());
+        newOrder.getProducts().setState(o.getProduct().getState());
+        newOrder.getProducts().setPrice(o.getProduct().getPrice());
+
+        return newOrder;
     }
 
     @GetMapping(value = "{userId}/orders")

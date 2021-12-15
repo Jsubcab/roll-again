@@ -8,6 +8,7 @@ public class UsersResponse
     private String zipcode;
     private Integer phone;
     private String email;
+    private ProductsResponse products;
 
     public Long getId()
     {
@@ -67,5 +68,15 @@ public class UsersResponse
     public void setEmail(final String email)
     {
         this.email = email;
+    }
+
+    public ProductsResponse getProducts()
+    {
+        return products;
+    }
+
+    public void setProducts(final ProductsResponse products)
+    {
+        this.products = products;
     }
 }

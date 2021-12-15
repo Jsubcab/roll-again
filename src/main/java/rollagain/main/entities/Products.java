@@ -38,6 +38,7 @@ public class Products implements Serializable
     private String description;
     private String picture;
     private String state;
+    private Double price;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name="category_id")
@@ -141,11 +142,20 @@ public class Products implements Serializable
         return category;
     }
 
+    public Double getPrice()
+    {
+        return price;
+    }
+
+    public void setPrice(final Double price)
+    {
+        this.price = price;
+    }
+
     public void setCategory(final Categories category)
     {
         this.category = category;
     }
-
 
     @Override
     public String toString()
@@ -156,6 +166,7 @@ public class Products implements Serializable
             ", description='" + description + '\'' +
             ", picture='" + picture + '\'' +
             ", state='" + state + '\'' +
+            ", price=" + price +
             ", category=" + category +
             ", user=" + user +
             '}';

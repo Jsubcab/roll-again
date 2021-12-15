@@ -80,6 +80,7 @@ public class ProductsService
         newProduct.setPicture(product.getPicture());
         newProduct.setCategory(category);
         newProduct.setUsers(user);
+        newProduct.setPrice(product.getPrice());
         return newProduct;
     }
 
@@ -112,6 +113,11 @@ public class ProductsService
         if (newProduct.getPicture() != null && newProduct.getPicture().length() > 0 && !Objects.equals(product.getPicture(),
             newProduct.getPicture())) {
             product.setPicture(newProduct.getPicture());
+        }
+
+        if (newProduct.getPrice() != null && !Objects.equals(product.getPrice(),
+            newProduct.getPrice())) {
+            product.setPrice(newProduct.getPrice());
         }
 
         if (product.getCategory() != null &&
