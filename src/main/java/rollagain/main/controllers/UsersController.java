@@ -3,6 +3,8 @@ package rollagain.main.controllers;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import rollagain.main.controllers.data.OrdersResponse;
 import rollagain.main.controllers.data.ProductsResponse;
+import rollagain.main.controllers.data.RatesResponse;
 import rollagain.main.controllers.data.UsersResponse;
 import rollagain.main.controllers.post.NewOrderRequest;
 import rollagain.main.entities.Orders;
@@ -43,14 +46,14 @@ public class UsersController
     //USERS
     @GetMapping
     public List<UsersResponse> getUsers(){
-        //return userService.getUsers();
-        final List<Users> productsList = userService.getUsers();
-        if (CollectionUtils.isEmpty(productsList)) {
+
+        final List<Users> usersList = userService.getUsers();
+        if (CollectionUtils.isEmpty(usersList)) {
             return Collections.emptyList();
         }
 
         List<UsersResponse> response = new ArrayList<>();
-        for (Users u : productsList) {
+        for (Users u : usersList) {
             UsersResponse newUser = createUsersResponse(u);
             response.add(newUser);
         }
@@ -67,19 +70,48 @@ public class UsersController
         newUser.setPhone(u.getPhone());
         newUser.setZipcode(u.getZipcode());
 
-        newUser.setProducts(new ProductsResponse());
-
-        // TO DO PRODUCTS
-        // newUser.getProducts().setId(u.getProducts().get);
-
+        if (u.getProducts() != null) {
+            final Set<ProductsResponse> productsResponses = u.getProducts().stream()
+                .map(product ->  createProductsResponse(product))
+                .collect(Collectors.toSet());
+            newUser.setProducts(productsResponses);
+        }
         return newUser;
+    }
+
+    private ProductsResponse createProductsResponse(final Products product)
+    {
+        ProductsResponse productsResponse = new ProductsResponse();
+        productsResponse.setName(product.getName());
+        productsResponse.setDescription(product.getDescription());
+        productsResponse.setState(product.getState());
+        productsResponse.setPrice(product.getPrice());
+        productsResponse.setPicture(product.getPicture());
+        productsResponse.setId(product.getId());
+        return productsResponse;
     }
 
     //USERS
     @GetMapping(value = "{userId}")
-    public Users getUserById(@PathVariable("userId") Long userId){
+    public UsersResponse getUserById(@PathVariable("userId") Long userId){
 
-        return userService.getUserById(userId);
+        final Users usersList = userService.getUserById(userId);
+        UsersResponse response = new UsersResponse();
+        response.setId(usersList.getId());
+        response.setCity(usersList.getCity());
+        response.setEmail(usersList.getEmail());
+        response.setPhone(usersList.getPhone());
+        response.setZipcode(usersList.getZipcode());
+        response.setUsername(usersList.getUsername());
+
+        if (usersList.getProducts() != null) {
+            final Set<ProductsResponse> productsResponses = usersList.getProducts().stream()
+                .map(product ->  createProductsResponse(product))
+                .collect(Collectors.toSet());
+            response.setProducts(productsResponses);
+        }
+
+        return response;
     }
 
     @PostMapping
@@ -100,8 +132,39 @@ public class UsersController
 
     //RATES
     @GetMapping(value = "/rates")
-    public List<Rates> getRates() {
-        return userService.getRates();
+    public List<RatesResponse> getRates() {
+
+        final List<Rates> ratesList = userService.getRates();
+        if (CollectionUtils.isEmpty(ratesList)) {
+            return Collections.emptyList();
+        }
+
+        List<RatesResponse> response = new ArrayList<>();
+        for (Rates r : ratesList) {
+            RatesResponse newRate = createRatesResponse(r);
+            response.add(newRate);
+        }
+        return response;
+
+    }
+
+    private RatesResponse createRatesResponse(final Rates r)
+    {
+        RatesResponse newRate = new RatesResponse();
+        newRate.setId(r.getId());
+        newRate.setComment(r.getComment());
+        newRate.setRating(r.getRating());
+
+        newRate.setUser(new UsersResponse());
+
+        newRate.getUser().setId(r.getUser().getId());
+        newRate.getUser().setCity(r.getUser().getCity());
+        newRate.getUser().setEmail(r.getUser().getEmail());
+        newRate.getUser().setPhone(r.getUser().getPhone());
+        newRate.getUser().setUsername(r.getUser().getUsername());
+        newRate.getUser().setZipcode(r.getUser().getZipcode());
+
+        return newRate;
     }
 
     @GetMapping(value = "{userId}/rates")
@@ -154,10 +217,8 @@ public class UsersController
     {
         OrdersResponse newOrder = new OrdersResponse();
         newOrder.setId(o.getId());
-        newOrder.setDate(o.getDate());
 
         newOrder.setUser(new UsersResponse());
-        newOrder.setProducts(new ProductsResponse());
 
         newOrder.getUser().setId(o.getUser().getId());
         newOrder.getUser().setUsername(o.getUser().getUsername());
@@ -165,6 +226,8 @@ public class UsersController
         newOrder.getUser().setCity(o.getUser().getCity());
         newOrder.getUser().setPhone(o.getUser().getPhone());
         newOrder.getUser().setZipcode(o.getUser().getZipcode());
+
+        newOrder.setProducts(new ProductsResponse());
 
         newOrder.getProducts().setId(o.getProduct().getId());
         newOrder.getProducts().setDescription(o.getProduct().getDescription());
@@ -176,8 +239,20 @@ public class UsersController
     }
 
     @GetMapping(value = "{userId}/orders")
-    public List<Orders> getOrdersById(@PathVariable("userId") Long userId) {
-        return userService.getOrdersById(userId);
+    public List<OrdersResponse> getOrdersById(@PathVariable("userId") Long userId) {
+
+        final List<Orders> ordersList = userService.getOrdersById(userId);
+        if (CollectionUtils.isEmpty(ordersList)) {
+            return Collections.emptyList();
+        }
+
+        List<OrdersResponse> response = new ArrayList<>();
+        for (Orders o : ordersList) {
+            OrdersResponse newOrder = createOrdersResponse(o);
+            response.add(newOrder);
+        }
+        return response;
+
     }
 
     @PostMapping(value = "{userId}/orders")

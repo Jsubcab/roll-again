@@ -1,12 +1,13 @@
 package rollagain.main.controllers.data;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 
 public class OrdersResponse
 {
     private Long id;
-    private Date date;
+    private LocalDate date;
     private UsersResponse user;
     private ProductsResponse products;
 
@@ -20,12 +21,12 @@ public class OrdersResponse
         this.id = id;
     }
 
-    public Date getDate()
+    public LocalDate getDate()
     {
         return date;
     }
 
-    public void setDate(final Date date)
+    public void setDate(final LocalDate date)
     {
         this.date = date;
     }

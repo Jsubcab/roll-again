@@ -9,13 +9,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 
-import rollagain.main.controllers.data.ProductsResponse;
 import rollagain.main.controllers.post.NewProductRequest;
 import rollagain.main.entities.Categories;
-import rollagain.main.entities.Permissions;
 import rollagain.main.entities.Products;
 import rollagain.main.entities.Users;
 import rollagain.main.repositories.CategoriesRepository;
@@ -76,7 +72,7 @@ public class ProductsService
         Products newProduct = new Products();
         newProduct.setName(product.getName());
         newProduct.setDescription(product.getDescription());
-        newProduct.setState(EnumStateProducts.ON_SALE.name());
+        newProduct.setState(EnumStateProducts.SELLING.name());
         newProduct.setPicture(product.getPicture());
         newProduct.setCategory(category);
         newProduct.setUsers(user);
@@ -100,7 +96,7 @@ public class ProductsService
             .orElseThrow(() -> new IllegalStateException(
                 "Product with id " + productId + " does not exist."));
 
-        if (newProduct.getName() != null && newProduct.getName() .length() > 0 && !Objects.equals(product.getName(),
+        if (newProduct.getName() != null && newProduct.getName().length() > 0 && !Objects.equals(product.getName(),
             newProduct.getName() )) {
             product.setName(newProduct.getName());
         }
@@ -116,6 +112,11 @@ public class ProductsService
         }
 
         if (newProduct.getPrice() != null && !Objects.equals(product.getPrice(),
+            newProduct.getPrice())) {
+            product.setPrice(newProduct.getPrice());
+        }
+
+        if (newProduct.getPrice() != null && newProduct.getPrice().toString().length() > 0 && !Objects.equals(product.getPrice(),
             newProduct.getPrice())) {
             product.setPrice(newProduct.getPrice());
         }

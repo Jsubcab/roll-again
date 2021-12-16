@@ -1,9 +1,13 @@
 package rollagain.main.controllers.post;
 
+import java.util.Date;
+
+
 public class NewOrderRequest
 {
     Long userId;
     Long productId;
+    Date date;
 
     public NewOrderRequest()
     {
@@ -41,12 +45,23 @@ public class NewOrderRequest
         this.productId = productId;
     }
 
+    public Date getDate()
+    {
+        return date;
+    }
+
+    public void setDate(final Date date)
+    {
+        this.date = date;
+    }
+
     @Override
     public String toString()
     {
         return "NewOrderRequest{" +
             "userId=" + userId +
             ", productId=" + productId +
+            ", date=" + date +
             '}';
     }
 }

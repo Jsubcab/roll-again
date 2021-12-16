@@ -57,24 +57,28 @@ public class Products implements Serializable
                     final String name,
                     final String description,
                     final String picture,
-                    final String state)
+                    final String state,
+                    final Double price)
     {
         this.id = id;
         this.name = name;
         this.description = description;
         this.picture = picture;
         this.state = state;
+        this.price = price;
     }
 
     public Products(final String name,
                     final String description,
                     final String picture,
-                    final String state)
+                    final String state,
+                    final Double price)
     {
         this.name = name;
         this.description = description;
         this.picture = picture;
         this.state = state;
+        this.price = price;
     }
 
     public Long getId()

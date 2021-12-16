@@ -1,6 +1,7 @@
 package rollagain.main.entities;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -35,7 +36,7 @@ public class Orders implements Serializable
 
     @Column(columnDefinition = "serial")
     private Long id;
-    private Date date;
+    private LocalDate date;
     @JoinColumn(name = "user_id")
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Users user;
@@ -45,29 +46,29 @@ public class Orders implements Serializable
     private Products product;
 
     public Orders() {
-
+        this.date = java.time.LocalDate.now();
     }
-    public Orders(final Long id, final Date date, final Users user)
+    public Orders(final Long id, final Users user)
     {
         this.id = id;
-        this.date = date;
+        this.date = java.time.LocalDate.now();
         this.user = user;
     }
 
-    public Orders(final Date date, final Users userOrder, final Products product)
+    public Orders(final Users userOrder, final Products product)
     {
-        this.date = date;
+        this.date = java.time.LocalDate.now();
         this.user = userOrder;
         this.product = product;
     }
 
-    public Orders(final Date date, final Users user)
+    public Orders(final Users user)
     {
-        this.date = date;
+        this.date = java.time.LocalDate.now();
         this.user = user;
     }
 
-    public Orders(final Date date)
+    public Orders(final LocalDate date)
     {
         this.date = date;
     }
@@ -82,12 +83,12 @@ public class Orders implements Serializable
         this.id = id;
     }
 
-    public Date getDate()
+    public LocalDate getDate()
     {
         return date;
     }
 
-    public void setDate(final Date date)
+    public void setDate(final LocalDate date)
     {
         this.date = date;
     }

@@ -1,10 +1,13 @@
 package rollagain.main.controllers.data;
 
+import java.util.Set;
+
+
 public class CategoriesResponse
 {
     private Long id;
     private String category;
-    private ProductsResponse product;
+    private Set<ProductsResponse> product;
 
     public Long getId()
     {
@@ -26,12 +29,12 @@ public class CategoriesResponse
         this.category = category;
     }
 
-    public ProductsResponse getProduct()
+    public Set<ProductsResponse> getProduct()
     {
         return product;
     }
 
-    public void setProduct(final ProductsResponse product)
+    public void setProduct(final Set<ProductsResponse> product)
     {
         this.product = product;
     }

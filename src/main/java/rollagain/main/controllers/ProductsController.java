@@ -3,10 +3,11 @@ package rollagain.main.controllers;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import rollagain.main.controllers.data.ProductsResponse;
 import rollagain.main.controllers.data.UsersResponse;
 import rollagain.main.controllers.post.NewProductRequest;
 import rollagain.main.entities.Products;
+import rollagain.main.entities.Users;
 import rollagain.main.services.ProductsService;
 
 
@@ -73,8 +75,27 @@ public class ProductsController
     }
 
     @GetMapping(path = "{productId}")
-    public Products getProductById(@PathVariable("productId") Long productId){
-        return productsService.getProductById(productId);
+    public ProductsResponse getProductById(@PathVariable("productId") Long productId){
+
+        final Products productsList = productsService.getProductById(productId);
+        ProductsResponse response = new ProductsResponse();
+        response.setId(productsList.getId());
+        response.setPicture(productsList.getPicture());
+        response.setPrice(productsList.getPrice());
+        response.setState(productsList.getState());
+        response.setDescription(productsList.getDescription());
+        response.setName(productsList.getName());
+
+/*        response.getUser().setId(productsList.getUsers().getId());
+        response.getUser().setUsername(productsList.getUsers().getUsername());
+        response.getUser().setZipcode(productsList.getUsers().getZipcode());
+        response.getUser().setPhone(productsList.getUsers().getPhone());
+        response.getUser().setEmail(productsList.getUsers().getEmail());
+        response.getUser().setCity(productsList.getUsers().getCity());*/
+
+        return response;
+
+        //return productsService.getProductById(productId);
     }
 
     @PostMapping

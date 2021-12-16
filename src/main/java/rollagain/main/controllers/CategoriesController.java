@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import rollagain.main.controllers.data.CategoriesResponse;
@@ -44,8 +44,8 @@ public class CategoriesController
 
         List<CategoriesResponse> response = new ArrayList<>();
         for (Categories c : categoriesList) {
-            CategoriesResponse newCategory = createCategoriesResponse(c);
-            response.add(newCategory);
+            CategoriesResponse newCategories = createCategoriesResponse(c);
+            response.add(newCategories);
         }
         return response;
 
@@ -58,10 +58,35 @@ public class CategoriesController
         newCategory.setId(c.getId());
         newCategory.setCategory(c.getCategory());
 
-        // TO ADD PRODUCTS
-        // newUser.getProducts().setId(u.getProducts().get);
-
+        if (c.getProducts() != null) {
+            final Set<ProductsResponse> productsResponses = c.getProducts().stream()
+                .map(product ->  createProductsResponse(product))
+                .collect(Collectors.toSet());
+            newCategory.setProduct(productsResponses);
+        }
         return newCategory;
+    }
+
+    private ProductsResponse createProductsResponse(final Products product)
+    {
+        ProductsResponse productsResponse = new ProductsResponse();
+        productsResponse.setName(product.getName());
+        productsResponse.setDescription(product.getDescription());
+        productsResponse.setState(product.getState());
+        productsResponse.setPrice(product.getPrice());
+        productsResponse.setPicture(product.getPicture());
+        productsResponse.setId(product.getId());
+
+        productsResponse.setUser(new UsersResponse());
+
+        productsResponse.getUser().setId(product.getUsers().getId());
+        productsResponse.getUser().setUsername(product.getUsers().getUsername());
+        productsResponse.getUser().setEmail(product.getUsers().getEmail());
+        productsResponse.getUser().setCity(product.getUsers().getCity());
+        productsResponse.getUser().setPhone(product.getUsers().getPhone());
+        productsResponse.getUser().setZipcode(product.getUsers().getZipcode());
+
+        return productsResponse;
     }
 
     @GetMapping(value = "{categoryId}")

@@ -1,5 +1,8 @@
 package rollagain.main.controllers.data;
 
+import java.util.Set;
+
+
 public class UsersResponse
 {
     private Long id;
@@ -8,7 +11,7 @@ public class UsersResponse
     private String zipcode;
     private Integer phone;
     private String email;
-    private ProductsResponse products;
+    private Set<ProductsResponse> products;
 
     public Long getId()
     {
@@ -70,12 +73,12 @@ public class UsersResponse
         this.email = email;
     }
 
-    public ProductsResponse getProducts()
+    public Set<ProductsResponse> getProducts()
     {
         return products;
     }
 
-    public void setProducts(final ProductsResponse products)
+    public void setProducts(final Set<ProductsResponse> products)
     {
         this.products = products;
     }
