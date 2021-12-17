@@ -2,16 +2,20 @@ package rollagain.main.controllers.data;
 
 import java.util.Set;
 
+import rollagain.main.entities.Permissions;
+
 
 public class UsersResponse
 {
     private Long id;
     private String username;
+    private String password;
     private String city;
     private String zipcode;
     private Integer phone;
     private String email;
     private Set<ProductsResponse> products;
+    private Permissions permissions;
 
     public Long getId()
     {
@@ -81,5 +85,25 @@ public class UsersResponse
     public void setProducts(final Set<ProductsResponse> products)
     {
         this.products = products;
+    }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(final String password)
+    {
+        this.password = password;
+    }
+
+    public Permissions getPermissions()
+    {
+        return permissions;
+    }
+
+    public void setPermissions(final Permissions permissions)
+    {
+        this.permissions = permissions;
     }
 }

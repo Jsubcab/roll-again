@@ -1,10 +1,18 @@
 package rollagain.main.services;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import org.apache.commons.logging.Log;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +31,7 @@ import rollagain.main.services.enums.EnumPermissions;
 
 
 @Service
-public class UsersService
+public class UsersService implements UserDetailsService
 {
     @Autowired
     private final UserRepository userRepository;
@@ -39,6 +47,19 @@ public class UsersService
 
     @Autowired
     private final ProductsRepository productRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException
+    {
+        Optional<Users> user = userRepository.findUsersByUsername(username);
+        if (user == null) {
+            Logger.getLogger("User not found in the database");
+            throw new UsernameNotFoundException("User not found in the database");
+        }
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        //user.get().getPermission(). // TO DO, GET PERMISSIONS TO USER
+        return new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(), authorities);
+    }
 
     public UsersService(final UserRepository userRepository,
                         final RatesRepository ratesRepository,
@@ -63,6 +84,13 @@ public class UsersService
         return user;
     }
 
+    public Users getUserByUsername(String username) {
+        Users user = userRepository.findUsersByUsername(username)
+            .orElseThrow(() -> new IllegalStateException(
+                "user with username " + username + " does not exist."));
+        return user;
+    }
+
     public void addNewUser(final Users user)
     {
         if (userRepository.existsUsersByEmail(user.getEmail()))
@@ -77,12 +105,12 @@ public class UsersService
 
     private Users createNewUser(Users users, Permissions permissions) {
         Users newUser = new Users();
-        newUser.setUsername(users.getUsername());
+        newUser.setUsername(users.getUsername().toLowerCase());
         newUser.setPassword(users.getPassword());
-        newUser.setCity(users.getCity());
+        newUser.setCity(users.getCity().toLowerCase());
         newUser.setZipcode(users.getZipcode());
         newUser.setPhone(users.getPhone());
-        newUser.setEmail(users.getEmail());
+        newUser.setEmail(users.getEmail().toLowerCase());
         newUser.setPermission(permissions);
 
         return newUser;
@@ -240,4 +268,6 @@ public class UsersService
         }
         ratesRepository.deleteById(orderId);
     }
+
+
 }

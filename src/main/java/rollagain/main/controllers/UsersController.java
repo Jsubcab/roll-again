@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -69,6 +70,8 @@ public class UsersController
         newUser.setCity(u.getCity());
         newUser.setPhone(u.getPhone());
         newUser.setZipcode(u.getZipcode());
+        newUser.setPassword(u.getPassword());
+        newUser.setPermissions(u.getPermission());
 
         if (u.getProducts() != null) {
             final Set<ProductsResponse> productsResponses = u.getProducts().stream()
@@ -103,6 +106,30 @@ public class UsersController
         response.setPhone(usersList.getPhone());
         response.setZipcode(usersList.getZipcode());
         response.setUsername(usersList.getUsername());
+        response.setPassword(usersList.getPassword());
+
+        if (usersList.getProducts() != null) {
+            final Set<ProductsResponse> productsResponses = usersList.getProducts().stream()
+                .map(product ->  createProductsResponse(product))
+                .collect(Collectors.toSet());
+            response.setProducts(productsResponses);
+        }
+
+        return response;
+    }
+
+    @RequestMapping(value = "/username/{username}", method = RequestMethod.GET)
+    public UsersResponse getUserByUsername(@PathVariable String username){
+
+        final Users usersList = userService.getUserByUsername(username);
+        UsersResponse response = new UsersResponse();
+        response.setId(usersList.getId());
+        response.setCity(usersList.getCity());
+        response.setEmail(usersList.getEmail());
+        response.setPhone(usersList.getPhone());
+        response.setZipcode(usersList.getZipcode());
+        response.setUsername(usersList.getUsername());
+        response.setPassword(usersList.getPassword());
 
         if (usersList.getProducts() != null) {
             final Set<ProductsResponse> productsResponses = usersList.getProducts().stream()
@@ -162,6 +189,7 @@ public class UsersController
         newRate.getUser().setEmail(r.getUser().getEmail());
         newRate.getUser().setPhone(r.getUser().getPhone());
         newRate.getUser().setUsername(r.getUser().getUsername());
+        newRate.getUser().setPassword(r.getUser().getPassword());
         newRate.getUser().setZipcode(r.getUser().getZipcode());
 
         return newRate;
@@ -226,6 +254,7 @@ public class UsersController
         newOrder.getUser().setCity(o.getUser().getCity());
         newOrder.getUser().setPhone(o.getUser().getPhone());
         newOrder.getUser().setZipcode(o.getUser().getZipcode());
+        newOrder.getUser().setPassword(o.getUser().getPassword());
 
         newOrder.setProducts(new ProductsResponse());
 
