@@ -29,7 +29,6 @@ import rollagain.main.entities.Permissions;
 import rollagain.main.entities.Products;
 import rollagain.main.entities.Rates;
 import rollagain.main.entities.Users;
-import rollagain.main.services.PermissionsService;
 import rollagain.main.services.UsersService;
 
 
@@ -141,7 +140,7 @@ public class UsersController
         return response;
     }
 
-    @PostMapping
+    @PostMapping("/signup")
     public void registerNewUser(@RequestBody Users user) {
         userService.addNewUser(user);
     }
@@ -156,6 +155,7 @@ public class UsersController
     @PathVariable("userId") Long userId, @RequestBody Users user) {
             userService.updateUser(userId, user);
         }
+
 
     //RATES
     @GetMapping(value = "/rates")

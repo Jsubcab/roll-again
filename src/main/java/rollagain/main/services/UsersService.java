@@ -1,17 +1,12 @@
 package rollagain.main.services;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import org.apache.commons.logging.Log;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +26,7 @@ import rollagain.main.services.enums.EnumPermissions;
 
 
 @Service
-public class UsersService implements UserDetailsService
+public class UsersService
 {
     @Autowired
     private final UserRepository userRepository;
@@ -48,18 +43,6 @@ public class UsersService implements UserDetailsService
     @Autowired
     private final ProductsRepository productRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException
-    {
-        Optional<Users> user = userRepository.findUsersByUsername(username);
-        if (user == null) {
-            Logger.getLogger("User not found in the database");
-            throw new UsernameNotFoundException("User not found in the database");
-        }
-        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        //user.get().getPermission(). // TO DO, GET PERMISSIONS TO USER
-        return new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(), authorities);
-    }
 
     public UsersService(final UserRepository userRepository,
                         final RatesRepository ratesRepository,
@@ -183,6 +166,14 @@ public class UsersService implements UserDetailsService
 
         userRepository.save(user);
         userRepository.flush();
+    }
+
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<Users> user = userRepository.findUsersByUsername(username);
+        if(user == null) {
+            throw new UsernameNotFoundException(username);
+        }
+        return new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(), Collections.emptyList());
     }
 
     public List<Rates> getRates()
