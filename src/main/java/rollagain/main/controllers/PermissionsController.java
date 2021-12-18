@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import rollagain.main.controllers.data.PermissionsResponse;
+import rollagain.main.controllers.data.ProductsResponse;
 import rollagain.main.controllers.data.UsersResponse;
 import rollagain.main.entities.Permissions;
 import rollagain.main.entities.Users;
@@ -33,6 +35,23 @@ public class PermissionsController
     public PermissionsController(final PermissionsService permissionsService)
     {
         this.permissionsService = permissionsService;
+    }
+
+    @GetMapping(value = "level")
+    public PermissionsResponse getPermissionsByLevel(@RequestParam("level") String level) {
+        final Permissions permissionsList = permissionsService.getPermissionsByLevel(level);
+        PermissionsResponse response = new PermissionsResponse();
+        response.setId(permissionsList.getId());
+        response.setLevel(permissionsList.getLevel());
+
+        if (permissionsList.getUsers() != null) {
+            final Set<UsersResponse> usersResponses = permissionsList.getUsers().stream()
+                .map(users ->  createUsersResponse(users))
+                .collect(Collectors.toSet());
+            response.setUsers(usersResponses);
+        }
+
+        return response;
     }
 
     //PERMISSIONS

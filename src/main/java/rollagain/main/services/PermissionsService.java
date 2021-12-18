@@ -20,6 +20,11 @@ public class PermissionsService
         this.permissionsRepository = permissionsRepository;
     }
 
+    public Permissions getPermissionsByLevel(String level)
+    {
+        return permissionsRepository.findPermissionsByLevel(level);
+    }
+
     public List<Permissions> getPermissions()
     {
         return permissionsRepository.findAll();

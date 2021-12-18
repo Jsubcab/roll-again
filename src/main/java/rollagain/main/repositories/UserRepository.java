@@ -20,6 +20,8 @@ public interface UserRepository extends JpaRepository<Users, Long>
 
     Boolean existsUsersByEmail(String email);
 
+    Boolean existsUsersByUsername(String username);
+
     @Query(value = "SELECT * FROM Users u WHERE u.permission_id = ?1", nativeQuery = true)
     Permissions findPermissionById(Long permission_id);
 }

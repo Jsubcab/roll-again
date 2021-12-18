@@ -76,9 +76,9 @@ public class UsersService
 
     public void addNewUser(final Users user)
     {
-        if (userRepository.existsUsersByEmail(user.getEmail()))
+        if (userRepository.existsUsersByEmail(user.getEmail()) || userRepository.existsUsersByUsername(user.getUsername()))
         {
-            throw new IllegalStateException("ERROR: Email already registered.");
+            throw new IllegalStateException("ERROR: Email or username already registered.");
         }
 
             Permissions permissionUser = permissionsRepository.findByLevel(EnumPermissions.USER.toString().toLowerCase());

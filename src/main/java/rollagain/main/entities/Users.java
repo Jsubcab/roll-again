@@ -44,7 +44,7 @@ public class Users implements Serializable
     private Integer phone;
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
     @JoinColumn(name="permission_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Permissions permission;

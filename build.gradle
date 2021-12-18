@@ -38,6 +38,13 @@ dependencies {
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
 
+    // https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api
+    implementation 'jakarta.xml.bind:jakarta.xml.bind-api:2.3.3'
+
+    // https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.2'
+
+
 
 
     testImplementation group: 'org.springframework', name: 'spring-test', version: '2.5'
