@@ -16,6 +16,7 @@ public class UsersResponse
     private String email;
     private Set<ProductsResponse> products;
     private Permissions permissions;
+    private String token;
 
     public Long getId()
     {
@@ -105,5 +106,15 @@ public class UsersResponse
     public void setPermissions(final Permissions permissions)
     {
         this.permissions = permissions;
+    }
+
+    public String getToken()
+    {
+        return token;
+    }
+
+    public void setToken(final String token)
+    {
+        this.token = token;
     }
 }
