@@ -147,33 +147,7 @@ public class UsersController
 
     @PostMapping("login")
     public UsersResponse login(@RequestParam("user") String username, @RequestParam("password") String pwd) {
-
-        String token = getJWTToken(username);
-        UsersResponse user = new UsersResponse();
-        user.setUsername(username);
-        user.setToken(token);
-        return user;
-    }
-
-    private String getJWTToken(String username) {
-        String secretKey = "mySecretKey";
-        List<GrantedAuthority> grantedAuthorities = AuthorityUtils
-            .commaSeparatedStringToAuthorityList("ROLE_USER");
-
-        String token = Jwts
-            .builder()
-            .setId("softtekJWT")
-            .setSubject(username)
-            .claim("authorities",
-                grantedAuthorities.stream()
-                    .map(GrantedAuthority::getAuthority)
-                    .collect(Collectors.toList()))
-            .setIssuedAt(new Date(System.currentTimeMillis()))
-            .setExpiration(new Date(System.currentTimeMillis() + 600000))
-            .signWith(SignatureAlgorithm.HS512,
-                secretKey.getBytes()).compact();
-
-        return "Bearer " + token;
+        return userService.loginUser(username, pwd);
     }
 
     @PostMapping("signup")

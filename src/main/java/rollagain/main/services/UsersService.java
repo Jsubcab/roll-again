@@ -1,16 +1,23 @@
 package rollagain.main.services;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import rollagain.main.controllers.data.UsersResponse;
 import rollagain.main.controllers.post.NewOrderRequest;
 import rollagain.main.entities.Orders;
 import rollagain.main.entities.Permissions;
@@ -108,6 +115,40 @@ public class UsersService
             userRepository.deleteById(userId);
     }
 
+    public UsersResponse loginUser(String username, String pwd) {
+
+        if (userRepository.existsUsersByUsername(username)) {
+            String token = getJWTToken(username);
+            UsersResponse user = new UsersResponse();
+            user.setUsername(username);
+            user.setToken(token);
+            return user;
+        } else {
+            throw new IllegalStateException("username " + username + " does not exists.");
+        }
+    }
+
+    private String getJWTToken(String username) {
+        String secretKey = "mySecretKey";
+        List<GrantedAuthority> grantedAuthorities = AuthorityUtils
+            .commaSeparatedStringToAuthorityList("ROLE_USER");
+
+        String token = Jwts
+            .builder()
+            .setId("softtekJWT")
+            .setSubject(username)
+            .claim("authorities",
+                grantedAuthorities.stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .collect(Collectors.toList()))
+            .setIssuedAt(new Date(System.currentTimeMillis()))
+            .setExpiration(new Date(System.currentTimeMillis() + 600000))
+            .signWith(SignatureAlgorithm.HS512,
+                secretKey.getBytes()).compact();
+
+        return "Bearer " + token;
+    }
+
     @Transactional
     public void updateUser(Long userId,
                            final Users newUserData) {
@@ -168,13 +209,8 @@ public class UsersService
         userRepository.flush();
     }
 
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Users> user = userRepository.findUsersByUsername(username);
-        if(user == null) {
-            throw new UsernameNotFoundException(username);
-        }
-        return new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(), Collections.emptyList());
-    }
+
+
 
     public List<Rates> getRates()
     {
