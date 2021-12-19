@@ -75,7 +75,7 @@ public class UsersController
         newUser.setPhone(u.getPhone());
         newUser.setZipcode(u.getZipcode());
         newUser.setPassword(u.getPassword());
-        newUser.setPermissions(u.getPermission());
+        newUser.setPermissions(u.getPermission().getLevel());
 
         if (u.getProducts() != null) {
             final Set<ProductsResponse> productsResponses = u.getProducts().stream()

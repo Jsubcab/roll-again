@@ -117,14 +117,16 @@ public class UsersService
 
     public UsersResponse loginUser(String username, String pwd) {
 
-        if (userRepository.existsUsersByUsername(username)) {
+        Optional<Users> userCheck = userRepository.findUsersByUsername(username);
+
+        if (userRepository.existsUsersByUsername(username) && userCheck.get().getPassword().equals(pwd)) {
             String token = getJWTToken(username);
             UsersResponse user = new UsersResponse();
             user.setUsername(username);
             user.setToken(token);
             return user;
         } else {
-            throw new IllegalStateException("username " + username + " does not exists.");
+            throw new IllegalStateException("username or password are wrong.");
         }
     }
 

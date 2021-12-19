@@ -15,7 +15,7 @@ public class UsersResponse
     private Integer phone;
     private String email;
     private Set<ProductsResponse> products;
-    private Permissions permissions;
+    private String permissions;
     private String token;
 
     public Long getId()
@@ -98,12 +98,12 @@ public class UsersResponse
         this.password = password;
     }
 
-    public Permissions getPermissions()
+    public String getPermissions()
     {
         return permissions;
     }
 
-    public void setPermissions(final Permissions permissions)
+    public void setPermissions(final String permissions)
     {
         this.permissions = permissions;
     }
