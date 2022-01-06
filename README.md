@@ -44,3 +44,7 @@ A continuación, si se inicia la clase main el proyecto debería quedar funciona
 ### 3. Como usar el proyecto
 
 Una vez el aplicativo esta en funcionamiento se pueden realizar llamadas desde cualquier tipo de software externo, ya sea Postman, otro sistema local, etc. Hay que tener en cuenta que los permisos para poder realizar las llamadas desde un Frontend pueden ser modificados en la clase DemoApplication.
+
+### 4. Pruebas
+
+Las pruebas se pueden realizar via Postman.
