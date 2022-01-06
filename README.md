@@ -43,23 +43,4 @@ A continuación, si se inicia la clase main el proyecto debería quedar funciona
 
 ### 3. Como usar el proyecto
 
-
-
-
-5. How to Use the Project
-
-Provide instructions and examples so users/contributors can use the project. This will make it easy for them in case they encounter a problem – they will always have a place to reference what is expected.
-
-You can also make use of visual aids by including materials like screenshots to show examples of the running project and also the structure and design principles used in your project.
-
-Also if your project will require authentication like passwords or usernames, this is a good section to include the credentials.
-
-6. Include Credits
-
-If you worked on the project as a team or an organization, list your collaborators/team members. You should also include links to their GitHub profiles and social media too.
-
-Also, if you followed tutorials or referenced a certain material that might help the user to build that particular project, include links to those here as well.
-
-This is just a way to show your appreciation and also to help others get a first hand copy of the project.
-
-7. Add a License
+Una vez el aplicativo esta en funcionamiento se pueden realizar llamadas desde cualquier tipo de software externo, ya sea Postman, otro sistema local, etc. Hay que tener en cuenta que los permisos para poder realizar las llamadas desde un Frontend pueden ser modificados en la clase DemoApplication.
