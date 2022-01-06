@@ -29,8 +29,12 @@ public class CategoriesConfig
                 "Filler".toLowerCase()
             );
 
+            final Categories Wargame = new Categories(
+                "Wargame".toLowerCase()
+            );
+
             repository.saveAll(
-                List.of(Ameritrash, Eurogame, Filler)
+                List.of(Ameritrash, Eurogame, Filler, Wargame)
             );
         };
     }
