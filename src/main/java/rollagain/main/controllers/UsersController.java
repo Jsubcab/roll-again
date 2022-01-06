@@ -8,8 +8,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,8 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import rollagain.main.controllers.data.OrdersResponse;
 import rollagain.main.controllers.data.ProductsResponse;
 import rollagain.main.controllers.data.RatesResponse;
@@ -191,6 +187,7 @@ public class UsersController
         RatesResponse newRate = new RatesResponse();
         newRate.setId(r.getId());
         newRate.setComment(r.getComment());
+        newRate.setDate(r.getDate());
         newRate.setRating(r.getRating());
 
         newRate.setUser(new UsersResponse());

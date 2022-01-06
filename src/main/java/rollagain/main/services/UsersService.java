@@ -1,6 +1,8 @@
 package rollagain.main.services;
 
-import java.util.Collections;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -10,8 +12,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -230,6 +230,12 @@ public class UsersService
         if (rates.getRating() > 5 || rates.getRating() < 0 || rates.getRating().isNaN()) {
             throw new IllegalStateException("Rates should be between 0 and 5");
         }
+
+        LocalDateTime ldt = LocalDateTime.now();
+        ZonedDateTime zdt = ldt.atZone(ZoneId.systemDefault());
+        Date output = Date.from(zdt.toInstant());
+
+        rates.setDate(output);
         rates.setUser(getUserById(userId));
         ratesRepository.save(rates);
     }

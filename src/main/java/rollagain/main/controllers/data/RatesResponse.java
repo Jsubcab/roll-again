@@ -1,12 +1,12 @@
 package rollagain.main.controllers.data;
 
-import rollagain.main.entities.Users;
-
+import java.util.Date;
 
 public class RatesResponse
 {
     private Long id;
     private Double rating;
+    private Date date;
     private String comment;
     private UsersResponse user;
 
@@ -38,6 +38,16 @@ public class RatesResponse
     public void setComment(final String comment)
     {
         this.comment = comment;
+    }
+
+    public Date getDate()
+    {
+        return date;
+    }
+
+    public void setDate(final Date date)
+    {
+        this.date = date;
     }
 
     public UsersResponse getUser()
