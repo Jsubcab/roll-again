@@ -32,7 +32,6 @@ public class Rates implements Serializable
     )
     @Column(columnDefinition = "serial")
     private Long id;
-    private Date date;
     private Double rating;
     private String comment;
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
@@ -95,22 +94,11 @@ public class Rates implements Serializable
         this.user = user;
     }
 
-    public Date getDate()
-    {
-        return date;
-    }
-
-    public void setDate(final Date date)
-    {
-        this.date = date;
-    }
-
     @Override
     public String toString()
     {
         return "Rates{" +
             "id=" + id +
-            ", date=" + date +
             ", rating=" + rating +
             ", comment='" + comment + '\'' +
             ", user=" + user +

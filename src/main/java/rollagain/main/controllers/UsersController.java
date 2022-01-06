@@ -187,7 +187,6 @@ public class UsersController
         RatesResponse newRate = new RatesResponse();
         newRate.setId(r.getId());
         newRate.setComment(r.getComment());
-        newRate.setDate(r.getDate());
         newRate.setRating(r.getRating());
 
         newRate.setUser(new UsersResponse());
@@ -255,7 +254,9 @@ public class UsersController
         newOrder.setId(o.getId());
 
         newOrder.setUser(new UsersResponse());
+        newOrder.setUserSeller(new UsersResponse());
 
+        newOrder.setDate(o.getDate());
         newOrder.getUser().setId(o.getUser().getId());
         newOrder.getUser().setUsername(o.getUser().getUsername());
         newOrder.getUser().setEmail(o.getUser().getEmail());
@@ -271,6 +272,14 @@ public class UsersController
         newOrder.getProducts().setName(o.getProduct().getName());
         newOrder.getProducts().setState(o.getProduct().getState());
         newOrder.getProducts().setPrice(o.getProduct().getPrice());
+
+        newOrder.getUserSeller().setId(o.getUserSeller().getId());
+        newOrder.getUserSeller().setUsername(o.getUserSeller().getUsername());
+        newOrder.getUserSeller().setEmail(o.getUserSeller().getEmail());
+        newOrder.getUserSeller().setCity(o.getUserSeller().getCity());
+        newOrder.getUserSeller().setPhone(o.getUserSeller().getPhone());
+        newOrder.getUserSeller().setZipcode(o.getUserSeller().getZipcode());
+        newOrder.getUserSeller().setPassword(o.getUserSeller().getPassword());
 
         return newOrder;
     }

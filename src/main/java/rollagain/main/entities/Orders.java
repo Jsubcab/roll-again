@@ -36,39 +36,40 @@ public class Orders implements Serializable
 
     @Column(columnDefinition = "serial")
     private Long id;
-    private LocalDate date;
+    private Date date;
     @JoinColumn(name = "user_id")
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Users user;
+
+    @JoinColumn(name = "user_id2", insertable = false, updatable = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Users userSeller;
 
     @JoinColumn(name = "product_id", nullable = false)
     @OneToOne(cascade = CascadeType.ALL)
     private Products product;
 
     public Orders() {
-        this.date = java.time.LocalDate.now();
+
     }
     public Orders(final Long id, final Users user)
     {
         this.id = id;
-        this.date = java.time.LocalDate.now();
         this.user = user;
     }
 
     public Orders(final Users userOrder, final Products product)
     {
-        this.date = java.time.LocalDate.now();
         this.user = userOrder;
         this.product = product;
     }
 
     public Orders(final Users user)
     {
-        this.date = java.time.LocalDate.now();
         this.user = user;
     }
 
-    public Orders(final LocalDate date)
+    public Orders(final Date date)
     {
         this.date = date;
     }
@@ -83,12 +84,12 @@ public class Orders implements Serializable
         this.id = id;
     }
 
-    public LocalDate getDate()
+    public Date getDate()
     {
         return date;
     }
 
-    public void setDate(final LocalDate date)
+    public void setDate(final Date date)
     {
         this.date = date;
     }
@@ -113,13 +114,24 @@ public class Orders implements Serializable
         this.product = product;
     }
 
+    public Users getUserSeller()
+    {
+        return userSeller;
+    }
+
+    public void setUserSeller(final Users userSeller)
+    {
+        this.userSeller = userSeller;
+    }
+
     @Override
     public String toString()
     {
         return "Orders{" +
             "id=" + id +
             ", date=" + date +
-            ", userOrder=" + user +
+            ", user=" + user +
+            ", userSeller=" + userSeller +
             ", product=" + product +
             '}';
     }

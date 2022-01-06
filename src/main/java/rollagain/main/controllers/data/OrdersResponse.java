@@ -7,8 +7,9 @@ import java.util.Date;
 public class OrdersResponse
 {
     private Long id;
-    private LocalDate date;
+    private Date date;
     private UsersResponse user;
+    private UsersResponse userSeller;
     private ProductsResponse products;
 
     public Long getId()
@@ -21,12 +22,12 @@ public class OrdersResponse
         this.id = id;
     }
 
-    public LocalDate getDate()
+    public Date getDate()
     {
         return date;
     }
 
-    public void setDate(final LocalDate date)
+    public void setDate(final Date date)
     {
         this.date = date;
     }
@@ -49,5 +50,15 @@ public class OrdersResponse
     public void setProducts(final ProductsResponse products)
     {
         this.products = products;
+    }
+
+    public UsersResponse getUserSeller()
+    {
+        return userSeller;
+    }
+
+    public void setUserSeller(final UsersResponse userSeller)
+    {
+        this.userSeller = userSeller;
     }
 }

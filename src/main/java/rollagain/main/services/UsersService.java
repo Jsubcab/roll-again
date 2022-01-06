@@ -231,11 +231,6 @@ public class UsersService
             throw new IllegalStateException("Rates should be between 0 and 5");
         }
 
-        LocalDateTime ldt = LocalDateTime.now();
-        ZonedDateTime zdt = ldt.atZone(ZoneId.systemDefault());
-        Date output = Date.from(zdt.toInstant());
-
-        rates.setDate(output);
         rates.setUser(getUserById(userId));
         ratesRepository.save(rates);
     }
@@ -288,8 +283,15 @@ public class UsersService
     {
         Optional<Users> user = userRepository.findById(userId);
         Optional<Products> product = productRepository.findById(order.getProductId());
+        Optional<Users> userSeller = userRepository.findById(product.get().getUsers().getId());
+
+        LocalDateTime ldt = LocalDateTime.now();
+        ZonedDateTime zdt = ldt.atZone(ZoneId.systemDefault());
+        Date output = Date.from(zdt.toInstant());
 
         Orders newOrder = new Orders();
+        newOrder.setDate(output);
+        newOrder.setUserSeller(userSeller.get());
         newOrder.setUser(user.get());
         newOrder.setProduct(product.get());
 
