@@ -83,7 +83,7 @@ public class UsersService
 
     public void addNewUser(final Users user)
     {
-        if (userRepository.existsUsersByEmail(user.getEmail()) || userRepository.existsUsersByUsername(user.getUsername()))
+        if (userRepository.existsUsersByEmail(user.getEmail().toLowerCase()) || userRepository.existsUsersByUsername(user.getUsername().toLowerCase()))
         {
             throw new IllegalStateException("ERROR: Email or username already registered.");
         }
@@ -123,6 +123,7 @@ public class UsersService
             String token = getJWTToken(username);
             UsersResponse user = new UsersResponse();
             user.setUsername(username);
+            user.setId(userCheck.get().getId());
             user.setToken(token);
             return user;
         } else {
