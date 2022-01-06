@@ -47,11 +47,6 @@ public class DemoApplication {
                 requestCache().requestCache(new NullRequestCache()).and().
                 cors().and().
                 csrf().disable();
-/*            http.csrf().disable()
-                .addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
-                .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/users/**").permitAll()
-                .anyRequest().authenticated();*/
         }
     }
 }

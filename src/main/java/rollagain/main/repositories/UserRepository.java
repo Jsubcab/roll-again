@@ -14,6 +14,7 @@ import rollagain.main.entities.Users;
 public interface UserRepository extends JpaRepository<Users, Long>
 {
     Users findUsersByEmail(String email);
+
     Optional<Users> findUsersByUsername(String username);
 
     Boolean existsUsersByEmail(String email);
