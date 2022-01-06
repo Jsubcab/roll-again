@@ -2,7 +2,7 @@
 
 Proyecto de Trabajo de Final 2020-2021 de Grado para la Universitat Oberta de Catalunya por el estudiante Jsubcab que cursa el grado de Ingenieria en Informática.
 
-### Descripción
+### 1. Descripción
 
 Aplicativo web destinado a la compra/venta de productos de primera/segunda mano de juegos de mesa. Desarrollado en Java (Backend) y React (Frontend) con bases de datos propia en localhost (PostgreSQL).
 
@@ -10,9 +10,9 @@ Este repositorio contiene toda la información del Backend del aplicativo en Jav
 
 Hay que tener en cuenta que el proyecto sigue en desarrollo y falta finalizar la parte Frontend para que sea funcional la parte visual del cliente.
 
-### Como instalar y hacer funcionar el proyecto
+### 2. Como instalar y hacer funcionar el proyecto
 
-#### Software requerido
+#### 2.1 Software requerido
 
 El proyecto esta subido para que funcione en localhost, pero es necesario tener instalado 2 tecnologias:
 
@@ -20,13 +20,13 @@ El proyecto esta subido para que funcione en localhost, pero es necesario tener 
 - Java > 14.
 - PostgreSQL > 13.
 
-#### Instrucciones para instalar
+#### 2.2 Instrucciones para instalar
 
-##### Base de datos
+##### 2.2.1 Base de datos
 - Crear una base de datos con PostgreSQL en el terminal (Nombre recomendado: rollagain).
 - (Opcional) Crear un usuario en PostgreSQL con permisos a la base de datos rollagain.
 
-##### IDE
+##### 2.2.2 IDE
 - Abrir en el marketplace del IDE la extensión Kotlin.
 - Clonar repositorio.
 - Abrir con IDE (Recomendable IntelliJ).
@@ -36,12 +36,12 @@ El proyecto esta subido para que funcione en localhost, pero es necesario tener 
 
 A continuación, si se inicia la clase main el proyecto debería quedar funcionando detrás.
 
-##### Posibles errores
+##### 2.2.3 Posibles errores
 
 - En el caso que se tenga instalado Java y Gradle en el terminal, revisar que dentro del proyecto este seleccionado el SDK correctamente.
 
 
-### Como usar el proyecto
+### 3. Como usar el proyecto
 
 
 
