@@ -45,7 +45,7 @@ public class Products implements Serializable
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Categories category;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="users_id")
     private Users user;
 
